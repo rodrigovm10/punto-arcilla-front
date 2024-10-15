@@ -10,7 +10,10 @@ module.exports = {
     extend: {},
     colors: {
       primary: '#003049',
-      secondary
+      secondary: '#d62828',
+      orange: '#f77f00',
+      yellow: '#fcbf49',
+      beige: '#eae2b7'
     }
   },
   plugins: []
