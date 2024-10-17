@@ -1,16 +1,14 @@
-import { SplashScreen, Stack } from 'expo-router'
-import { useFonts } from 'expo-font'
-import { useEffect } from 'react'
+import { Stack } from 'expo-router'
 
 export default function RootLayout() {
-  return ( 
+  return (
     <Stack>
       <Stack.Screen
         name='index'
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name='login'
+        name='(tabs)'
         options={{ headerShown: false }}
       />
     </Stack>

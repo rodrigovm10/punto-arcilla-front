@@ -1,32 +1,56 @@
+import { useState } from 'react'
 import { Image } from 'expo-image'
-import { Pressable, Text, View } from 'react-native'
-import { router } from 'expo-router'
-const OnboardingImg = require('../assets/images/onboarding.png')
+import { Link } from 'expo-router'
+import { Text, View } from 'react-native'
+import AppIntroSlider from 'react-native-app-intro-slider'
+import { Dimensions } from 'react-native'
+
+import { ONBOARDING_TEXTS } from '@/constants/texts'
 
 export function Onboarding() {
+  const [showHomePage, setShowHomePage] = useState(false)
+
+  const buttonLabel = (label: string) => {
+    return (
+      <View className='p-[12px] bg-primary rounded-lg'>
+        <Text className='font-bold text-white'>{label}</Text>
+      </View>
+    )
+  }
+
+  const { width } = Dimensions.get('screen')
+
+  if (!showHomePage) {
+    return (
+      <AppIntroSlider
+        data={ONBOARDING_TEXTS}
+        renderItem={({ item }) => {
+          return (
+            <View style={{ flex: 1, alignItems: 'center', padding: 15, paddingTop: 100 }}>
+              <Image
+                source={item.image}
+                style={{ width: width - 50, height: 400 }}
+              />
+              <Text className='text-black font-bold text-xl mb-4'>{item.title}</Text>
+              <Text className='text-black text-base px-5 text-justify'>{item.text}</Text>
+            </View>
+          )
+        }}
+        activeDotStyle={{ backgroundColor: '#003049', width: 30 }}
+        renderNextButton={() => buttonLabel('Siguiente')}
+        renderSkipButton={() => buttonLabel('Saltar')}
+        renderDoneButton={() => buttonLabel('Iniciar Sesión')}
+        onDone={() => {
+          setShowHomePage(true)
+        }}
+        showSkipButton={true}
+      />
+    )
+  }
 
   return (
     <View>
-      <Image
-        source={OnboardingImg}
-        style={{ width: 320, height: 440 }}
-        className='rounded-lg'
-      />
-      <View className='flex justify-center items-center gap-y-2 '>
-        <Text className='text-lg font-bold g'>Bienvenido a Punto de Arcilla</Text>
-        <Pressable
-          onPress={() => alert('holaaa')}
-          className='bg-blue-400 w-full rounded-md flex items-center p-2'
-        >
-          <Text className='text-white'>Siguiente</Text>
-        </Pressable>
-        <Pressable
-          onPress={() => router.push('/login')}
-          className='bg-blue-400 w-full text-white rounded-md flex items-center p-2'
-        >
-          <Text className='text-white'>Saltar</Text>
-        </Pressable>
-      </View>
+      <Text>Home</Text>
     </View>
   )
 }
