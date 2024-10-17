@@ -3,10 +3,14 @@ import { useFonts } from 'expo-font'
 import { useEffect } from 'react'
 
 export default function RootLayout() {
-  return (
+  return ( 
     <Stack>
       <Stack.Screen
         name='index'
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name='login'
         options={{ headerShown: false }}
       />
     </Stack>
