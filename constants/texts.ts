@@ -21,3 +21,8 @@ export const ONBOARDING_TEXTS = [
     backgroundColor: '#09f'
   }
 ]
+
+export const USER_ROLES = [
+  { label: 'Comprador', value: 'BUYER' },
+  { label: 'Vendedor', value: 'SELLER' }
+]

@@ -1,5 +1,5 @@
-import { Onboarding } from '@/screens/Onboarding'
+import App from '@/App'
 
-export default function Index() {
-  return <Onboarding />
+export default function IndexPage() {
+  return <App />
 }

@@ -1,16 +1,24 @@
-import { Stack } from 'expo-router'
+import { SessionProvider } from '@/context/authContext'
+import { Slot, Stack } from 'expo-router'
+import Toast from 'react-native-toast-message'
 
 export default function RootLayout() {
   return (
-    <Stack>
-      <Stack.Screen
-        name='index'
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name='(tabs)'
-        options={{ headerShown: false }}
-      />
-    </Stack>
+    <SessionProvider>
+      <Stack>
+        <Stack.Screen
+          name='index'
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name='login'
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name='signup'
+          options={{ headerShown: false }}
+        />
+      </Stack>
+    </SessionProvider>
   )
 }

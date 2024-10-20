@@ -1,42 +1,148 @@
-import React from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import { router } from 'expo-router';
+import { useFonts } from 'expo-font'
+import { Link, router } from 'expo-router'
+import { Text, ScrollView } from 'react-native'
+import { useForm, Controller } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
 
-const SignUp: React.FC = () => {
+import { createUser } from '@/services/user'
+import { CreateUserForm } from '@/interfaces/user'
+import { Input } from '@/components/form/Input'
+import { signUpFormSchema, SignUpFormSchema } from '@/schemas/userSchema'
+import { Button } from '@/components/ui/Button'
+
+export default function SignUpPage() {
+  const [loaded] = useFonts({
+    GraphikBold: require('../assets/fonts/GraphikBold.otf'),
+    GraphikRegular: require('../assets/fonts/GraphikRegular.otf'),
+    GraphikSemibold: require('../assets/fonts/GraphikSemibold.otf'),
+    GraphikMedium: require('../assets/fonts/GraphikMedium.otf')
+  })
+
+  if (!loaded) return null
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<SignUpFormSchema>({ resolver: zodResolver(signUpFormSchema), mode: 'onBlur' })
+
+  const onSubmit = async (data: CreateUserForm) => {
+    const { name, confirmPassword, email, password } = data
+    console.log(data)
+    // 1. password equals confirmPassword
+    if (password !== confirmPassword) {
+      return alert('La contraseña no coincide')
+    }
+
+    const sanitizedData = {
+      name,
+      email,
+      password
+    }
+
+    try {
+      const user = await createUser(sanitizedData)
+
+      if (user) {
+        router.push('/product')
+        alert('Usuario creado')
+      }
+    } catch (error) {
+      alert('Intentalo más tarde')
+      throw error
+    }
+  }
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Bienvenido a Punto de Arcilla </Text>
-      <Text style={styles.subtitle}>Regístrese o inicie sesión 
-      </Text>
-
-      <TextInput placeholder="Nombre" style={styles.input} />
-      <TextInput placeholder="Ingresa tu correo electrónico" style={styles.input} />
-      <TextInput placeholder="Ingresa tu contraseña" secureTextEntry={true} style={styles.input} />
-      <TextInput placeholder="Confirma tu contraseña" secureTextEntry={true} style={styles.input} />
-
-      <TouchableOpacity style={styles.primaryButton}>
-        <Text style={styles.primaryButtonText}>Sign Up</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={styles.loginButton}
-        onPress={() => router.push('/login')}
+    <ScrollView className='flex-1 p-6 mt-10 bg-white'>
+      <Text
+        className='font-semibold text-3xl mb-[10px]'
+        style={{ fontFamily: 'GraphikBold' }}
       >
-        <Text style={styles.loginButtonText}>Already have an account? Login</Text>
-      </TouchableOpacity>
-    </View>
-  );
-};
+        <Text className='text-primary'>Registrate</Text> en punto de arcilla
+      </Text>
+      <Text
+        className='text-sm font-bold opacity-60 mb-4'
+        style={{ fontFamily: 'GraphikRegular' }}
+      >
+        Crea una cuenta para acceder a punto de arcilla y empezar a vender o comprar productos.
+      </Text>
+      {/* <Controller
+        control={control}
+        name='name'
+        render={({ field: { onBlur, onChange, value } }) => (
+          <Input
+            onBlur={onBlur}
+            onChange={onChange}
+            value={value}
+            errors={errors}
+            placeholder='Nombre'
+            typeError='name'
+            label='Escribe tu nombre'
+          />
+        )}
+      /> */}
+      <Controller
+        control={control}
+        name='email'
+        render={({ field: { onChange, onBlur, value } }) => (
+          <Input
+            onBlur={onBlur}
+            onChange={onChange}
+            value={value}
+            errors={errors}
+            placeholder='Correo electrónico'
+            typeError='email'
+            label='Escribe tu correo electrónico
+            '
+          />
+        )}
+      />
+      <Controller
+        control={control}
+        name='password'
+        render={({ field: { onChange, onBlur, value } }) => (
+          <Input
+            onBlur={onBlur}
+            onChange={onChange}
+            value={value}
+            errors={errors}
+            placeholder='Contraseña'
+            typeError='password'
+            label='Contraseña'
+            isPassword
+          />
+        )}
+      />
+      <Controller
+        control={control}
+        name='confirmPassword'
+        render={({ field: { onChange, onBlur, value } }) => (
+          <Input
+            onBlur={onBlur}
+            onChange={onChange}
+            value={value}
+            errors={errors}
+            placeholder='Confirmar Contraseña'
+            typeError='confirmPassword'
+            label='Confirmar Contraseña'
+            isPassword
+          />
+        )}
+      />
+      <Button onPress={handleSubmit(onSubmit)}>Iniciar Sesión</Button>
 
-const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center', alignItems: 'center', padding: 16, backgroundColor: '#fff' },
-  title: { fontSize: 24, fontWeight: 'bold', marginBottom: 10 },
-  subtitle: { fontSize: 14, color: '#777', textAlign: 'center', marginBottom: 20 },
-  input: { width: '80%', padding: 10, borderColor: '#ccc', borderWidth: 1, borderRadius: 5, marginVertical: 8 },
-  primaryButton: { backgroundColor: '#34c759', padding: 10, marginTop: 20, width: '80%', alignItems: 'center', borderRadius: 5 },
-  primaryButtonText: { color: '#fff', fontWeight: 'bold' },
-  loginButton: { marginTop: 20 },
-  loginButtonText: { color: '#34c759', fontWeight: 'bold' },
-});
-
-export default SignUp;
+      <Link
+        href='/login'
+        className='mt-5 self-center'
+      >
+        <Text
+          className='text-secondary
+           underline mt-5 font-bold'
+        >
+          ¿Ya tienes una cuenta? Inicia Sesión
+        </Text>
+      </Link>
+    </ScrollView>
+  )
+}
