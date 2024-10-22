@@ -8,3 +8,21 @@ export const HomeIcon = (props: any) => (
     {...props}
   />
 )
+
+export const SearchIcon = (props: any) => (
+  <AntDesign
+    name='search1'
+    size={24}
+    color='black'
+    {...props}
+  />
+)
+
+export const CartIcon = (props: any) => (
+  <AntDesign
+    name='caretcircleoup'
+    size={24}
+    color='black'
+    {...props}
+  />
+)
