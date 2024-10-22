@@ -1,46 +1,23 @@
 import { useState } from 'react'
-import { Link, router } from 'expo-router'
+import { Link } from 'expo-router'
 import { View, Text, ActivityIndicator } from 'react-native'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, Controller } from 'react-hook-form'
 
-import { loginUser } from '@/services/user'
 import { Input } from '@/components/form/Input'
-import { LoginUser as LoginUserForm } from '@/interfaces/user'
-import { loginFormSchema, LoginFormSchema } from '@/schemas/userSchema'
 import { Button } from '@/components/ui/Button'
+import { useLogin } from '@/hooks/auth/useLogin'
+import { loginFormSchema, LoginFormSchema } from '@/schemas/userSchema'
 
 export default function LoginPage() {
+  const { isLoading, onSubmit } = useLogin()
+
   const {
     control,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
+    getValues
   } = useForm<LoginFormSchema>({ resolver: zodResolver(loginFormSchema), mode: 'onBlur' })
-
-  const [isLoading, setIsLoading] = useState(false)
-
-  const onSubmit = async (data: LoginUserForm) => {
-    const { email, password } = data
-    setIsLoading(true)
-
-    try {
-      const user = await loginUser(data)
-      router.push('/product')
-    } catch (error: any) {
-      console.log(error)
-      if (error.response) {
-        console.log('Error de respuesta:', error.response.data)
-        console.log('Estado:', error.response.status)
-        console.log('Encabezados:', error.response.headers)
-      } else if (error.request) {
-        console.log('Error en la solicitud:', error.request)
-      } else {
-        console.log('Error:', error.message)
-      }
-    } finally {
-      setIsLoading(false)
-    }
-  }
 
   if (isLoading) {
     return (
@@ -99,7 +76,7 @@ export default function LoginPage() {
         )}
       />
 
-      <Button onPress={handleSubmit(onSubmit)}>Registrate</Button>
+      <Button onPress={handleSubmit(onSubmit)}>Iniciar sesión</Button>
       <Link
         href='/signup'
         className='mt-5 self-center'

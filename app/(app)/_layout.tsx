@@ -1,8 +1,7 @@
 import { HomeIcon } from '@/components/Icons'
-import { Stack, Tabs } from 'expo-router'
-import { Text, View } from 'react-native'
+import { Tabs } from 'expo-router'
 
-export default function TabsLayout() {
+export default function AppLayout() {
   return (
     <Tabs
       screenOptions={{

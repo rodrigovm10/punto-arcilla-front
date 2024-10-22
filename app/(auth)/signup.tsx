@@ -4,54 +4,19 @@ import { Text, ScrollView } from 'react-native'
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 
-import { createUser } from '@/services/user'
-import { CreateUserForm } from '@/interfaces/user'
 import { Input } from '@/components/form/Input'
 import { signUpFormSchema, SignUpFormSchema } from '@/schemas/userSchema'
 import { Button } from '@/components/ui/Button'
+import { useRegister } from '@/hooks/auth/useRegister'
 
 export default function SignUpPage() {
-  const [loaded] = useFonts({
-    GraphikBold: require('../assets/fonts/GraphikBold.otf'),
-    GraphikRegular: require('../assets/fonts/GraphikRegular.otf'),
-    GraphikSemibold: require('../assets/fonts/GraphikSemibold.otf'),
-    GraphikMedium: require('../assets/fonts/GraphikMedium.otf')
-  })
-
-  if (!loaded) return null
+  const { onSubmit } = useRegister()
 
   const {
     control,
     handleSubmit,
     formState: { errors }
   } = useForm<SignUpFormSchema>({ resolver: zodResolver(signUpFormSchema), mode: 'onBlur' })
-
-  const onSubmit = async (data: CreateUserForm) => {
-    const { name, confirmPassword, email, password } = data
-    console.log(data)
-    // 1. password equals confirmPassword
-    if (password !== confirmPassword) {
-      return alert('La contraseña no coincide')
-    }
-
-    const sanitizedData = {
-      name,
-      email,
-      password
-    }
-
-    try {
-      const user = await createUser(sanitizedData)
-
-      if (user) {
-        router.push('/product')
-        alert('Usuario creado')
-      }
-    } catch (error) {
-      alert('Intentalo más tarde')
-      throw error
-    }
-  }
 
   return (
     <ScrollView className='flex-1 p-6 mt-10 bg-white'>
@@ -130,7 +95,7 @@ export default function SignUpPage() {
           />
         )}
       />
-      <Button onPress={handleSubmit(onSubmit)}>Iniciar Sesión</Button>
+      <Button onPress={handleSubmit(onSubmit)}>Registrarse</Button>
 
       <Link
         href='/login'

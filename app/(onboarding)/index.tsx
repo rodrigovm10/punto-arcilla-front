@@ -1,21 +1,18 @@
 import { Image } from 'expo-image'
-import { router } from 'expo-router'
-import { useFonts } from 'expo-font'
+import { Redirect, router } from 'expo-router'
 import { Text, View } from 'react-native'
 import { Dimensions } from 'react-native'
 import AppIntroSlider from 'react-native-app-intro-slider'
 
 import { ONBOARDING_TEXTS } from '@/constants/texts'
+import { useSession } from '@/hooks/auth/useSession'
 
-export function Onboarding() {
-  const [loaded] = useFonts({
-    GraphikBold: require('../assets/fonts/GraphikBold.otf'),
-    GraphikRegular: require('../assets/fonts/GraphikRegular.otf'),
-    GraphikSemibold: require('../assets/fonts/GraphikSemibold.otf'),
-    GraphikMedium: require('../assets/fonts/GraphikMedium.otf')
-  })
+export default function OnboardingScreen() {
+  const { session } = useSession()
 
-  if (!loaded) return null
+  if (session) {
+    return <Redirect href={'/(app)/product'} />
+  }
 
   const buttonLabel = (label: string) => {
     return (
