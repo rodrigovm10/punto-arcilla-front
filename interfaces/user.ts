@@ -1,12 +1,10 @@
 export interface CreateUserForm {
-  name: string
   email: string
   password: string
   confirmPassword: string
 }
 
 export interface CreateUser {
-  name: string
   email: string
   password: string
 }
@@ -19,4 +17,9 @@ export interface UserRole {
 export interface LoginUser {
   email: string
   password: string
+}
+
+export interface UserLogged {
+  name: string
+  email: string
 }

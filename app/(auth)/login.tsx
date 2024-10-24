@@ -15,8 +15,7 @@ export default function LoginPage() {
   const {
     control,
     handleSubmit,
-    formState: { errors },
-    getValues
+    formState: { errors }
   } = useForm<LoginFormSchema>({ resolver: zodResolver(loginFormSchema), mode: 'onBlur' })
 
   if (isLoading) {

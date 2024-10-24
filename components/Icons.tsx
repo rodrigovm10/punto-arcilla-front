@@ -1,4 +1,6 @@
 import AntDesign from '@expo/vector-icons/AntDesign'
+import Entypo from '@expo/vector-icons/Entypo'
+import FontAwsome from '@expo/vector-icons/FontAwesome'
 
 export const HomeIcon = (props: any) => (
   <AntDesign
@@ -26,3 +28,34 @@ export const CartIcon = (props: any) => (
     {...props}
   />
 )
+
+export const CheckIcon = (props: any) => {
+  if (props.active) {
+    return (
+      <FontAwsome
+        name='check-circle'
+        size={16}
+        color='black'
+        {...props}
+      />
+    )
+  }
+
+  return (
+    <Entypo
+      name='circle'
+      size={16}
+      color='black'
+      {...props}
+    />
+  )
+}
+
+// export const CircleIcon = (props: any) => (
+//   <AntDesign
+//     name='circle'
+//     size={24}
+//     color='black'
+//     {...props}
+//   />
+// )

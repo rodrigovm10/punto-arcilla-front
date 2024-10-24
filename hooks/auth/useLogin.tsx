@@ -14,10 +14,7 @@ export function useLogin() {
 
     try {
       const user = await loginUser(data)
-      console.log(data)
-      console.log(user)
-      alert(JSON.stringify(user))
-      signIn(user.data.token)
+      signIn([user.data.token, { name: user.data.name, email: user.data.email }])
       router.replace('/product')
     } catch (error: any) {
       alert(JSON.stringify(error))

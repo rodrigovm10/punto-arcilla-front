@@ -5,9 +5,9 @@ import { StatusBar, View } from 'react-native'
 import * as SplashScreen from 'expo-splash-screen'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 
+import { UserLogged } from '@/interfaces/user'
 import { useSession } from '@/hooks/auth/useSession'
 import { SessionProvider } from '@/context/authContext'
-import { useOnboarding } from '@/hooks/useOnboarding'
 import { BoardingProvider } from '@/context/boardingContext'
 
 SplashScreen.preventAutoHideAsync()
@@ -34,27 +34,26 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
-  const { session, isLoading } = useSession()
-  const { isLoading: boardingLoading, boarding: boardingCompleted } = useOnboarding()
+  const { session, isLoading, isLoadingUser, user } = useSession()
 
   useEffect(() => {
-    if (isLoading) return
-    if (boardingLoading) return
+    if (isLoading && isLoadingUser) return
 
-    if (session) router.replace('/product')
-    else router.replace('/(onboarding)')
-  }, [isLoading, session, boardingLoading])
+    if (session && user) {
+      const userObject: UserLogged = JSON.parse(user)
+      if (!userObject.name && userObject.email) return router.replace('/check-role')
+      router.replace('/product')
+    } else router.replace('/(onboarding)')
+  }, [isLoading, session])
 
   return (
     <SessionProvider>
-      <BoardingProvider>
-        <SafeAreaProvider>
-          <View className='flex-1 '>
-            <StatusBar backgroundColor='#582F0E' />
-            <Slot />
-          </View>
-        </SafeAreaProvider>
-      </BoardingProvider>
+      <SafeAreaProvider>
+        <View className='flex-1 '>
+          <StatusBar backgroundColor='#582F0E' />
+          <Slot />
+        </View>
+      </SafeAreaProvider>
     </SessionProvider>
   )
 }

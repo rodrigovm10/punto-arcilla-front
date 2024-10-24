@@ -1,10 +1,8 @@
 import z from 'zod'
 
+// REGISTER
+
 export const signUpFormSchema = z.object({
-  name: z
-    .string({ message: 'Este campo es obligatorio' })
-    .min(3, { message: 'El nombre debe tener mínimo 15 caracteres de largo.' })
-    .max(100, { message: 'El nombre debe tener máximo 100 caracteres de largo.' }),
   email: z
     .string({ message: 'Este campo es obligatorio' })
     .email({ message: 'Por favor verifica que tu correo electrónico sea correcto' }),
@@ -17,6 +15,8 @@ export const signUpFormSchema = z.object({
 })
 
 export type SignUpFormSchema = z.infer<typeof signUpFormSchema>
+
+// LOGIN
 
 export const loginFormSchema = z.object({
   email: z

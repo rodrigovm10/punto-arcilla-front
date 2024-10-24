@@ -1,7 +1,7 @@
 import { CreateUser, LoginUser } from '@/interfaces/user'
 import axios from 'axios'
 
-const API_URL = 'http://192.168.1.132:3000'
+const API_URL = 'http://192.168.0.184:3000'
 
 export const createUser = async (user: CreateUser) => {
   try {
