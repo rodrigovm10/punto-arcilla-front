@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { Link } from 'expo-router'
 import { View, Text, ActivityIndicator } from 'react-native'
 import { zodResolver } from '@hookform/resolvers/zod'

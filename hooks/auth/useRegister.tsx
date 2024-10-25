@@ -7,7 +7,7 @@ import { useSession } from './useSession'
 
 export function useRegister() {
   const [isLoading, setIsLoading] = useState(false)
-  const { signIn, session, user } = useSession()
+  const { signIn, session } = useSession()
 
   const onSubmit = async (data: CreateUserForm) => {
     const { confirmPassword, email, password } = data

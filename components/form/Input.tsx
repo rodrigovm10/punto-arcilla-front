@@ -1,18 +1,19 @@
 import { useFonts } from 'expo-font'
 import { Noop } from 'react-hook-form'
-import { TextInput, View, Text } from 'react-native'
+import { TextInput, View, Text, KeyboardTypeOptions } from 'react-native'
 
 import { TextError } from './TextError'
 
 interface InputProps {
   onChange: Noop
   onBlur: Noop
-  value: string
+  value: string | number
   errors: any
   placeholder?: string
   typeError: string
   label: string
   isPassword?: boolean
+  keyBoardType?: KeyboardTypeOptions
 }
 
 export function Input({
@@ -22,7 +23,8 @@ export function Input({
   errors,
   typeError,
   label,
-  isPassword = false
+  isPassword = false,
+  keyBoardType
 }: InputProps) {
   const [loaded] = useFonts({
     GraphikBold: require('../../assets/fonts/GraphikBold.otf'),
@@ -52,6 +54,7 @@ export function Input({
           style={{ fontFamily: 'GraphikMedium' }}
           selectionColor='#582F0E'
           secureTextEntry={isPassword}
+          keyboardType={keyBoardType}
         />
 
         {errors[typeError] && <TextError>{errors[typeError].message}</TextError>}
