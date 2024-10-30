@@ -1,31 +1,16 @@
 import { Link } from 'expo-router'
-import { Text, ScrollView, ActivityIndicator, View } from 'react-native'
-import { useForm, Controller } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
+import { Text, ScrollView } from 'react-native'
+import { Controller } from 'react-hook-form'
 
-import { Input } from '@/components/form/Input'
-import { signUpFormSchema, SignUpFormSchema } from '@/schemas/userSchema'
 import { Button } from '@/components/ui/Button'
+import { Input } from '@/components/form/Input'
 import { useRegister } from '@/hooks/auth/useRegister'
 
 export default function SignUpPage() {
-  const { isLoading, onSubmit } = useRegister()
+  const { control, errors, handleSubmit, onSubmit, isLoading } = useRegister()
 
-  const {
-    control,
-    handleSubmit,
-    formState: { errors }
-  } = useForm<SignUpFormSchema>({ resolver: zodResolver(signUpFormSchema), mode: 'onBlur' })
-
-  if (isLoading) {
-    return (
-      <View className='flex-1 justify-center'>
-        <ActivityIndicator />
-      </View>
-    )
-  }
   return (
-    <ScrollView className='flex-1 p-6 mt-10 bg-white'>
+    <ScrollView className='flex-1 p-6 bg-white'>
       <Text
         className='font-semibold text-3xl mb-[10px]'
         style={{ fontFamily: 'GraphikBold' }}
@@ -87,7 +72,12 @@ export default function SignUpPage() {
           />
         )}
       />
-      <Button onPress={handleSubmit(onSubmit)}>Registrarse</Button>
+      <Button
+        onPress={handleSubmit(onSubmit)}
+        isLoading={isLoading}
+      >
+        Registrarse
+      </Button>
 
       <Link
         href='/login'

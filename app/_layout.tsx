@@ -39,9 +39,7 @@ function RootLayoutNav() {
   useEffect(() => {
     if (isLoading && isLoadingUser) return
 
-    if (session && user) {
-      const userObject: UserLogged = JSON.parse(user)
-      if (!userObject.name && userObject.email) return router.replace('/check-role')
+    if (session) {
       router.replace('/product')
     } else router.replace('/(onboarding)')
   }, [isLoading, session])

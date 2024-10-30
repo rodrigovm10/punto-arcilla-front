@@ -1,29 +1,21 @@
 import { router } from 'expo-router'
-import { useEffect, useState } from 'react'
 import { Text, View } from 'react-native'
-import { Checkbox } from '@/components/ui/Checkbox'
+
 import { Button } from '@/components/ui/Button'
+import { useRole } from '@/hooks/userInfo/useRole'
+import { Checkbox } from '@/components/ui/Checkbox'
 import { TextError } from '@/components/form/TextError'
+import { Role } from '@/interfaces/user'
 
-export default function CheckRoleScreen() {
-  const [roles, setRoles] = useState<string[]>([])
-  const [disabled, setDisabled] = useState(false)
-  const [errorMessage, setErrorMessage] = useState('')
+export default function RoleScreen() {
+  const { roles, disabled, errorMessage, setRoles, onSubmit, isLoading } = useRole()
 
-  useEffect(() => {
-    if (roles.length === 0) {
-      setDisabled(true)
-    } else setDisabled(false)
+  const handleSubmit = async () => {
+    await onSubmit(Role[roles[0] as keyof typeof Role])
+  }
 
-    if (roles.length === 2) {
-      setDisabled(true)
-      setErrorMessage('Solo puedes seleccionar una opción')
-      return
-    }
-    setErrorMessage('')
-  }, [roles])
   return (
-    <View className='flex-1 mt-10 p-6 bg-white'>
+    <View className='flex-1 p-6 bg-white'>
       {/* <Text className='text-3'>Punto de Arcilla</Text> */}
       <View className='mb-4'>
         <Text
@@ -54,9 +46,8 @@ export default function CheckRoleScreen() {
 
       <Button
         disabled={disabled}
-        onPress={() => {
-          router.push('/address')
-        }}
+        onPress={handleSubmit}
+        isLoading={isLoading}
       >
         Siguiente
       </Button>

@@ -1,46 +1,53 @@
 import { useState } from 'react'
 import { router } from 'expo-router'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
 
+import { useSession } from './useSession'
 import { createUser } from '@/services/user'
 import { CreateUserForm } from '@/interfaces/user'
-import { useSession } from './useSession'
+import { signUpFormSchema, SignUpFormSchema } from '@/schemas/userSchema'
 
 export function useRegister() {
   const [isLoading, setIsLoading] = useState(false)
   const { signIn, session } = useSession()
+  const {
+    control,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<SignUpFormSchema>({ resolver: zodResolver(signUpFormSchema), mode: 'onChange' })
 
   const onSubmit = async (data: CreateUserForm) => {
     const { confirmPassword, email, password } = data
     setIsLoading(true)
 
-    // 1. password equals confirmPassword
-    if (password !== confirmPassword) {
-      return alert('La contraseña no coincide')
-    }
-
-    const sanitizedData = {
-      email,
-      password
-    }
-
-    console.log(sanitizedData)
-
     try {
+      // 1. password equals confirmPassword
+      if (password !== confirmPassword) {
+        return alert('La contraseña no coincide')
+      }
+
+      const sanitizedData = {
+        email,
+        password
+      }
+
       const user = await createUser(sanitizedData)
 
       if (user) {
-        signIn([user.data.token, { email: user.data.email, name: '' }])
-        alert(JSON.stringify({ user, session }))
-        alert('Usuario creado')
-        router.push('/check-role')
+        signIn([
+          user.data.token,
+          { id: user.data.user.id, email: user.data.user.email, role: user.data.user.role }
+        ])
+        router.push('/role')
       }
     } catch (error) {
       alert('Intentalo más tarde')
-      console.log(error)
+
       throw error
     } finally {
       setIsLoading(false)
     }
   }
-  return { onSubmit, isLoading }
+  return { control, errors, handleSubmit, onSubmit, isLoading }
 }

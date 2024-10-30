@@ -1,29 +1,41 @@
-import { useEffect } from 'react'
-import { Text, TouchableOpacity } from 'react-native'
+import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native'
 
 interface ButtonProps {
   children: React.ReactNode
-  onPress: () => {} | void
+  onPress: () => void
   disabled?: boolean
   classProps?: string
+  isLoading?: boolean
 }
 
-export function Button({ children, onPress, disabled = false, classProps }: ButtonProps) {
+export function Button({
+  children,
+  onPress,
+  disabled = false,
+  classProps = '',
+  isLoading = false
+}: ButtonProps) {
   return (
     <TouchableOpacity
-      className={` bg-primary py-4 mt-3 w-full items-center rounded-xl ${classProps} ${
-        !disabled ? 'bg-primary' : 'bg-alloyOrange'
-      }`}
+      className={`py-4 mt-3 w-full items-center rounded-xl ${
+        disabled || isLoading ? 'bg-alloyOrange' : 'bg-primary'
+      } ${classProps}`}
       onPress={onPress}
       activeOpacity={0.8}
-      disabled={disabled}
+      disabled={disabled || isLoading}
     >
-      <Text
-        className='font-bold text-white'
-        style={{ fontFamily: 'GraphikRegular' }}
-      >
-        {children}
-      </Text>
+      <View className='flex-row items-center justify-center'>
+        {isLoading ? (
+          <ActivityIndicator color='#fff' />
+        ) : (
+          <Text
+            className='font-bold text-white'
+            style={{ fontFamily: 'GraphikRegular' }}
+          >
+            {children}
+          </Text>
+        )}
+      </View>
     </TouchableOpacity>
   )
 }

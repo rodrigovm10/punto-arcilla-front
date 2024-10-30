@@ -7,7 +7,7 @@ import { TextError } from './TextError'
 interface InputProps {
   onChange: Noop
   onBlur: Noop
-  value: string | number
+  value: string | number | undefined
   errors: any
   placeholder?: string
   typeError: string

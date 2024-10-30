@@ -6,11 +6,13 @@ export default function AuthLayout() {
   const { session, user } = useSession()
   if (session && user) {
     const userObject: UserLogged = JSON.parse(user)
-    if (userObject.name && userObject.email) return <Redirect href={'/(app)/product'} />
+    if (userObject.role && userObject.email) return <Redirect href={'/(app)/product'} />
   }
 
   return (
-    <Stack>
+    <Stack
+      screenOptions={{ statusBarColor: '#582F0E', headerStyle: { backgroundColor: '#582F0E' } }}
+    >
       <Stack.Screen
         name='login'
         options={{ headerShown: false }}

@@ -1,31 +1,16 @@
-import { Input } from '@/components/form/Input'
-import { Button } from '@/components/ui/Button'
-import { addressFormSchema, AddressFormSchema } from '@/schemas/addressSchema'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useEffect } from 'react'
-import { Controller, useForm } from 'react-hook-form'
+import { Controller } from 'react-hook-form'
 import { ScrollView, Text, View } from 'react-native'
 
+import { Input } from '@/components/form/Input'
+import { Button } from '@/components/ui/Button'
+import { useAddress } from '@/hooks/userInfo/useAddress'
+
 export default function AddressScreen() {
-  const {
-    control,
-    handleSubmit,
-
-    formState: { errors, isDirty, isValid }
-  } = useForm<AddressFormSchema>({
-    resolver: zodResolver(addressFormSchema),
-    mode: 'onBlur'
-  })
-
-  useEffect(() => {
-    console.log({ isDirty })
-    console.log({ isValid })
-  }, [])
-
+  const { control, errors, handleSubmit, isDirty, isValid } = useAddress()
   const onSubmit = async () => {}
 
   return (
-    <ScrollView className='flex-1 mt-10 p-6 bg-white'>
+    <ScrollView className='flex-1 p-6 bg-white'>
       <View className='mb-4'>
         <Text
           className='font-semibold text-2xl mb-[10px]'

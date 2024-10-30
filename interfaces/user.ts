@@ -20,6 +20,12 @@ export interface LoginUser {
 }
 
 export interface UserLogged {
-  name: string
+  id: string
   email: string
+  role: Role | null
+}
+
+export enum Role {
+  BUYER,
+  SELLER
 }

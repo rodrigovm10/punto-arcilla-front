@@ -12,10 +12,10 @@ export default function AppLayout() {
 
     if (user) {
       const userObject: UserLogged = JSON.parse(user)
-
-      if (!userObject.name) {
+      alert(userObject)
+      if (!userObject.role) {
         alert('No has compleado tus datos, completa tus datos antes de iniciar')
-        router.replace('/check-role')
+        router.replace('/role')
       }
     }
   }, [user])

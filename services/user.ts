@@ -1,7 +1,9 @@
-import { CreateUser, LoginUser } from '@/interfaces/user'
 import axios from 'axios'
 
-const API_URL = 'http://192.168.56.1:3000'
+import { CreateUser, LoginUser, Role } from '@/interfaces/user'
+import { tokenSanitized } from '@/lib/validators'
+
+const API_URL = 'http://10.31.1.14:3000'
 
 export const createUser = async (user: CreateUser) => {
   try {
@@ -19,6 +21,25 @@ export const loginUser = async (user: LoginUser) => {
 
     return res
   } catch (error: any) {
+    throw error
+  }
+}
+
+export const updateRole = async (role: Role, userId: string, token: string) => {
+  try {
+    const res = await axios.patch(
+      `${API_URL}/api/user/${userId}/role`,
+      { role: Role[role] },
+      {
+        headers: {
+          Authorization: tokenSanitized(token)
+        }
+      }
+    )
+
+    return res
+  } catch (error) {
+    console.error('Error actualizando rol:', error) // Mejora el manejo de errores
     throw error
   }
 }
