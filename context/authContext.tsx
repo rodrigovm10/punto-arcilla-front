@@ -1,4 +1,4 @@
-import { createContext } from 'react'
+import { createContext, ReactNode } from 'react'
 import { useStorage } from '@/hooks/useStorage'
 import { UserLogged } from '@/interfaces/user'
 
@@ -20,7 +20,7 @@ export const AuthContext = createContext<AuthContextType | undefined>({
   user: null
 })
 
-export const SessionProvider = ({ children }: { children: React.ReactNode }) => {
+export const SessionProvider = ({ children }: { children: ReactNode }) => {
   const [[isLoading, session], setSession] = useStorage('session')
   const [[isLoadingUser, user], setUser] = useStorage('user')
 

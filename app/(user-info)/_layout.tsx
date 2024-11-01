@@ -16,20 +16,6 @@ export default function ProfileLayout() {
       <Stack.Screen
         name='address'
         options={{ headerShown: false }}
-        // options={{
-        //   headerStyle: { backgroundColor: '#582F0E' },
-        //   headerLeft: () => (
-        //     <Link
-        //       asChild
-        //       href='/profile'
-        //     >
-        //       <Pressable onPress={() => {}}>
-        //         <BackIcon color={'white'} />
-        //       </Pressable>
-        //     </Link>
-        //   ),
-        //   title: ''
-        // }}
       />
     </Stack>
   )
