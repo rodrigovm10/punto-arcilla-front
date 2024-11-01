@@ -45,8 +45,6 @@ export const updateRole = async (role: Role, userId: string, token: string) => {
 }
 
 export const getAddress = async (id: string, token: string) => {
-  console.log(tokenSanitized(token))
-  console.log(id)
   try {
     const res = await axios.get(`${API_URL}/api/user/${id}/address`, {
       headers: {

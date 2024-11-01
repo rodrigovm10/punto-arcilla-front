@@ -7,7 +7,7 @@ import { Input } from '@/components/form/Input'
 import { useRegister } from '@/hooks/auth/useRegister'
 
 export default function SignUpPage() {
-  const { control, errors, handleSubmit, onSubmit, isLoading } = useRegister()
+  const { control, errors, handleSubmit, onSubmit, isLoading, isDirty, isValid } = useRegister()
 
   return (
     <ScrollView className='flex-1 p-6 bg-white'>
@@ -75,6 +75,7 @@ export default function SignUpPage() {
       <Button
         onPress={handleSubmit(onSubmit)}
         isLoading={isLoading}
+        disabled={!isDirty || !isValid}
       >
         Registrarse
       </Button>

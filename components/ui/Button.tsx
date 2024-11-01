@@ -6,6 +6,7 @@ interface ButtonProps {
   disabled?: boolean
   classProps?: string
   isLoading?: boolean
+  variant?: 'primary' | 'error'
 }
 
 export function Button({
@@ -13,13 +14,19 @@ export function Button({
   onPress,
   disabled = false,
   classProps = '',
-  isLoading = false
+  isLoading = false,
+  variant = 'primary'
 }: ButtonProps) {
+  const variantClasses = {
+    primary: 'bg-primary',
+    error: 'bg-red-500/90'
+  }
+
   return (
     <TouchableOpacity
-      className={`py-4 mt-3 w-full items-center rounded-xl ${
-        disabled || isLoading ? 'bg-alloyOrange' : 'bg-primary'
-      } ${classProps}`}
+      className={`py-4 mt-3 w-full items-center rounded-xl ${variantClasses[variant]} ${
+        (disabled || isLoading) && 'bg-alloyOrange'
+      } ${classProps} `}
       onPress={onPress}
       activeOpacity={0.8}
       disabled={disabled || isLoading}
@@ -29,7 +36,7 @@ export function Button({
           <ActivityIndicator color='#fff' />
         ) : (
           <Text
-            className='font-bold text-white'
+            className='font-bold text-white text-center'
             style={{ fontFamily: 'GraphikRegular' }}
           >
             {children}

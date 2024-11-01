@@ -1,12 +1,23 @@
 import { Controller } from 'react-hook-form'
-import { ScrollView, Text, View } from 'react-native'
+import { ActivityIndicator, ScrollView, Text, View } from 'react-native'
 
 import { Input } from '@/components/form/Input'
 import { Button } from '@/components/ui/Button'
 import { useAddress } from '@/hooks/userInfo/useAddress'
 
 export default function AddressScreen() {
-  const { control, errors, handleSubmit, isDirty, isValid, onSubmit } = useAddress()
+  const { control, errors, handleSubmit, isDirty, isValid, onSubmit, isLoading } = useAddress()
+
+  if (isLoading) {
+    return (
+      <View className='flex-1 justify-center items-center'>
+        <ActivityIndicator
+          color='#582F0E'
+          size={'large'}
+        />
+      </View>
+    )
+  }
 
   return (
     <ScrollView className='flex-1 p-6 bg-white'>

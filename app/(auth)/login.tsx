@@ -1,5 +1,5 @@
 import { Link } from 'expo-router'
-import { View, Text, ActivityIndicator } from 'react-native'
+import { View, Text } from 'react-native'
 import { Controller } from 'react-hook-form'
 
 import { Input } from '@/components/form/Input'
@@ -10,7 +10,7 @@ export default function LoginPage() {
   const { control, errors, isLoading, isDirty, isValid, handleSubmit, onSubmit } = useLogin()
 
   return (
-    <View className='flex-1 p-6 bg-white'>
+    <View className={`flex-1 p-6  text-white `}>
       <View className='mb-4'>
         <Text
           className='font-semibold text-3xl mb-[10px]'

@@ -11,6 +11,7 @@ import { router } from 'expo-router'
 export function useAddress() {
   const { user, session } = useSession()
   const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState('')
 
   const {
     control,
@@ -25,6 +26,7 @@ export function useAddress() {
   const onSubmit = async (data: AddressFormSchema) => {
     if (!user || !session) return
     setIsLoading(true)
+    setError('')
 
     const { houseNumber, postalCode } = data
 
@@ -41,12 +43,15 @@ export function useAddress() {
 
       router.replace('/product')
     } catch (error: any) {
-      alert(JSON.stringify(error.response.data))
-      throw error
+      if (error.response.status === 400) {
+        setError(error.response.data.error)
+      } else {
+        setError('Intentalo más tarde.')
+      }
     } finally {
       setIsLoading(false)
     }
   }
 
-  return { errors, isDirty, control, isValid, handleSubmit, onSubmit }
+  return { errors, isDirty, control, isValid, handleSubmit, onSubmit, isLoading, error }
 }

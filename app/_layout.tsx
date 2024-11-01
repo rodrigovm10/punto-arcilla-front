@@ -5,10 +5,8 @@ import { StatusBar, View } from 'react-native'
 import * as SplashScreen from 'expo-splash-screen'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 
-import { UserLogged } from '@/interfaces/user'
 import { useSession } from '@/hooks/auth/useSession'
 import { SessionProvider } from '@/context/authContext'
-import { BoardingProvider } from '@/context/boardingContext'
 
 SplashScreen.preventAutoHideAsync()
 

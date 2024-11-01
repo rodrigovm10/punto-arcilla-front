@@ -21,10 +21,7 @@ export function useRole() {
 
     try {
       const res = await updateRole(role, userObject.id, session)
-      signIn([
-        session,
-        { id: res.data.user.id, email: res.data.user.email, role: res.data.user.role }
-      ])
+
       router.push(`/profile?role=${roles[0]}`)
     } catch (error) {
       alert(error)

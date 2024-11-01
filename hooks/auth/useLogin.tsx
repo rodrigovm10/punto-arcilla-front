@@ -7,10 +7,11 @@ import { useSession } from './useSession'
 import { loginUser } from '@/services/user'
 import { LoginUser as LoginUserForm } from '@/interfaces/user'
 import { loginFormSchema, LoginFormSchema } from '@/schemas/userSchema'
+import { toastAlert } from '@/lib/toast'
 
 export function useLogin() {
-  const [isLoading, setIsLoading] = useState(false)
   const { signIn } = useSession()
+  const [isLoading, setIsLoading] = useState(false)
 
   const {
     control,
@@ -29,11 +30,15 @@ export function useLogin() {
       ])
       router.replace('/product')
     } catch (error: any) {
-      alert(JSON.stringify(error))
-      throw error
+      if (error.response.status === 400) {
+        toastAlert(error.response.data.error)
+      } else {
+        toastAlert('Intentalo más tarde.')
+      }
     } finally {
       setIsLoading(false)
     }
   }
+
   return { control, errors, isLoading, isDirty, isValid, handleSubmit, onSubmit }
 }
