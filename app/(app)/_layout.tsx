@@ -4,8 +4,9 @@ import { router, Tabs } from 'expo-router'
 import { userHasAddress, userHasProfile } from '@/lib/scripts'
 import { UserLogged } from '@/interfaces/user'
 import { useSession } from '@/hooks/auth/useSession'
-import { HomeIcon, SearchIcon } from '@/components/Icons'
+import { CartIcon, HomeIcon, SearchIcon, UserIcon } from '@/components/Icons'
 import { getUser } from '@/services/user'
+import { COLORS } from '@/constants/colors'
 
 export default function AppLayout() {
   const { session, user } = useSession()
@@ -42,13 +43,26 @@ export default function AppLayout() {
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarStyle: { backgroundColor: 'black', borderRadius: 10 },
-        tabBarActiveTintColor: ''
+        tabBarStyle: {
+          backgroundColor: 'white',
+          paddingBottom: 4
+        },
+        tabBarActiveTintColor: COLORS.secondary,
+        tabBarLabelStyle: {
+          fontFamily: 'GraphikSemibold'
+        },
+        headerTitleStyle: {
+          fontFamily: 'GraphikSemibold'
+        }
       }}
     >
       <Tabs.Screen
         name='product'
-        options={{ title: 'Productos', tabBarIcon: ({ color }) => <HomeIcon color={color} /> }}
+        options={{
+          title: 'Productos',
+          tabBarIcon: ({ color }) => <HomeIcon color={color} />,
+          tabBarItemStyle: {}
+        }}
       ></Tabs.Screen>
       <Tabs.Screen
         name='search'
@@ -56,11 +70,15 @@ export default function AppLayout() {
       ></Tabs.Screen>
       <Tabs.Screen
         name='cart'
-        options={{ title: 'Carrito' }}
+        options={{ title: 'Carrito', tabBarIcon: ({ color }) => <CartIcon color={color} /> }}
       ></Tabs.Screen>
       <Tabs.Screen
         name='account'
-        options={{ title: 'Cuenta' }}
+        options={{
+          title: 'Cuenta',
+          tabBarIcon: ({ color }) => <UserIcon color={color} />,
+          headerShown: true
+        }}
       ></Tabs.Screen>
     </Tabs>
   )
