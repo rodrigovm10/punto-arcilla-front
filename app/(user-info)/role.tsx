@@ -35,8 +35,8 @@ export default function RoleScreen() {
       <View>
         <Checkbox
           options={[
-            { label: 'Vendedor', value: 'SELLER' },
-            { label: 'Comprador', value: 'BUYER' }
+            { label: 'Vender prductos.', value: 'SELLER' },
+            { label: 'Comprar productos.', value: 'BUYER' }
           ]}
           checkedValues={roles}
           onChange={setRoles}

@@ -6,8 +6,7 @@ import { Button } from '@/components/ui/Button'
 import { useAddress } from '@/hooks/userInfo/useAddress'
 
 export default function AddressScreen() {
-  const { control, errors, handleSubmit, isDirty, isValid } = useAddress()
-  const onSubmit = async () => {}
+  const { control, errors, handleSubmit, isDirty, isValid, onSubmit } = useAddress()
 
   return (
     <ScrollView className='flex-1 p-6 bg-white'>

@@ -1,24 +1,47 @@
-import { HomeIcon, SearchIcon } from '@/components/Icons'
-import { useSession } from '@/hooks/auth/useSession'
-import { UserLogged } from '@/interfaces/user'
-import { router, Tabs } from 'expo-router'
 import { useEffect } from 'react'
+import { router, Tabs } from 'expo-router'
+
+import { userHasAddress, userHasProfile } from '@/lib/scripts'
+import { UserLogged } from '@/interfaces/user'
+import { useSession } from '@/hooks/auth/useSession'
+import { HomeIcon, SearchIcon } from '@/components/Icons'
 
 export default function AppLayout() {
-  const { user, isLoadingUser } = useSession()
+  const { session, user, isLoadingUser } = useSession()
 
   useEffect(() => {
     if (isLoadingUser) return
 
     if (user) {
       const userObject: UserLogged = JSON.parse(user)
-      alert(userObject)
       if (!userObject.role) {
-        alert('No has compleado tus datos, completa tus datos antes de iniciar')
         router.replace('/role')
       }
     }
   }, [user])
+
+  useEffect(() => {
+    ;(async () => {
+      if (!user || !session) return
+
+      const userObject: UserLogged = JSON.parse(user)
+
+      const [hasAddress, addressMessage] = await userHasAddress(user, session)
+      const [hasProfile, profileMessage] = await userHasProfile(user, session)
+
+      if (!hasProfile) {
+        router.replace(`/profile?role=${userObject.role}`)
+        alert(profileMessage)
+        return
+      }
+      if (!hasAddress) {
+        router.replace('/address')
+        alert(addressMessage)
+        return
+      }
+    })()
+  }, [user, session])
+
   return (
     <Tabs
       screenOptions={{

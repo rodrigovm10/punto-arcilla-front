@@ -27,7 +27,7 @@ export function useLogin() {
         user.data.token,
         { id: user.data.user.id, email: user.data.user.email, role: user.data.user.role }
       ])
-      router.replace('/role')
+      router.replace('/product')
     } catch (error: any) {
       alert(JSON.stringify(error))
       throw error

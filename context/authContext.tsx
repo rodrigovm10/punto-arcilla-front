@@ -30,7 +30,6 @@ export const SessionProvider = ({ children }: { children: React.ReactNode }) => 
         signIn: (value: [token: string, user: UserLogged]) => {
           setSession(JSON.stringify(value[0]))
           setUser(JSON.stringify(value[1]))
-          console.log({ value })
         },
         signOut: () => {
           setSession(null)

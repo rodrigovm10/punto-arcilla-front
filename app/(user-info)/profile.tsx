@@ -1,27 +1,14 @@
+import { router } from 'expo-router'
 import { Text, View } from 'react-native'
-import { useForm, Controller } from 'react-hook-form'
-import { router, useLocalSearchParams } from 'expo-router'
-import { profileFormSchema, ProfileFormSchema } from '@/schemas/profileSchemas'
-import { zodResolver } from '@hookform/resolvers/zod'
+import { Controller } from 'react-hook-form'
+
 import { Input } from '@/components/form/Input'
 import { Button } from '@/components/ui/Button'
-import { useState } from 'react'
+import { useProfile } from '@/hooks/userInfo/useProfile'
 
 export default function ProfileScreen() {
-  const { role } = useLocalSearchParams<{ role: string }>()
-  const [roleState] = useState(role ?? '')
-
-  const {
-    control,
-    handleSubmit,
-
-    formState: { errors, isDirty, isValid }
-  } = useForm<ProfileFormSchema>({
-    resolver: zodResolver(profileFormSchema),
-    mode: 'onChange'
-  })
-
-  const onSubmit = async () => {}
+  const { errors, isDirty, isValid, onSubmit, role, roleState, control, handleSubmit, isLoading } =
+    useProfile()
 
   return (
     <View className='flex-1 p-6 bg-white'>
@@ -45,12 +32,12 @@ export default function ProfileScreen() {
 
       {roleState === 'SELLER' && (
         <>
-          <Text
+          {/* <Text
             className='text-base font-bold opacity-60 mb-4'
             style={{ fontFamily: 'GraphikRegular' }}
           >
             Ahora ingrese el nombre de su negocio
-          </Text>
+          </Text> */}
           <Controller
             control={control}
             name='name'
@@ -107,12 +94,10 @@ export default function ProfileScreen() {
       )}
 
       <Button
-        onPress={() => {
-          handleSubmit(onSubmit)
-          router.push('/address')
-        }}
+        onPress={handleSubmit(onSubmit)}
         classProps='mb-10'
         disabled={!isDirty || !isValid}
+        isLoading={isLoading}
       >
         Siguiente
       </Button>

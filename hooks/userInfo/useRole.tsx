@@ -1,9 +1,9 @@
+import { router } from 'expo-router'
 import { useEffect, useState } from 'react'
 
-import { Role, UserLogged } from '@/interfaces/user'
 import { updateRole } from '@/services/user'
-import { useSession } from '../auth/useSession'
-import { router } from 'expo-router'
+import { Role, UserLogged } from '@/interfaces/user'
+import { useSession } from '@/hooks/auth/useSession'
 
 export function useRole() {
   const { session, user, signIn } = useSession()

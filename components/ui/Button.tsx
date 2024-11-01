@@ -1,7 +1,7 @@
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native'
 
 interface ButtonProps {
-  children: React.ReactNode
+  children?: React.ReactNode
   onPress: () => void
   disabled?: boolean
   classProps?: string

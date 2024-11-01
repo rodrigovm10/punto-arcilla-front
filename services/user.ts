@@ -3,7 +3,7 @@ import axios from 'axios'
 import { CreateUser, LoginUser, Role } from '@/interfaces/user'
 import { tokenSanitized } from '@/lib/validators'
 
-const API_URL = 'http://10.31.1.14:3000'
+const API_URL = 'http://192.168.11.235:3000'
 
 export const createUser = async (user: CreateUser) => {
   try {
@@ -40,6 +40,50 @@ export const updateRole = async (role: Role, userId: string, token: string) => {
     return res
   } catch (error) {
     console.error('Error actualizando rol:', error) // Mejora el manejo de errores
+    throw error
+  }
+}
+
+export const getAddress = async (id: string, token: string) => {
+  console.log(tokenSanitized(token))
+  console.log(id)
+  try {
+    const res = await axios.get(`${API_URL}/api/user/${id}/address`, {
+      headers: {
+        Authorization: tokenSanitized(token)
+      }
+    })
+
+    return res
+  } catch (error) {
+    throw error
+  }
+}
+
+export const getProfile = async (id: string, token: string) => {
+  try {
+    const res = await axios.get(`${API_URL}/api/user/${id}/profile`, {
+      headers: {
+        Authorization: tokenSanitized(token)
+      }
+    })
+
+    return res
+  } catch (error) {
+    throw error
+  }
+}
+
+export const getUser = async (id: string, token: string) => {
+  try {
+    const res = await axios.get(`${API_URL}/api/user/${id}`, {
+      headers: {
+        Authorization: tokenSanitized(token)
+      }
+    })
+
+    return res
+  } catch (error) {
     throw error
   }
 }

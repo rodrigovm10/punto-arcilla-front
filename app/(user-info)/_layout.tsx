@@ -1,6 +1,4 @@
-import { BackIcon } from '@/components/Icons'
-import { Link, Stack } from 'expo-router'
-import { Pressable } from 'react-native'
+import { Stack } from 'expo-router'
 
 export default function ProfileLayout() {
   return (
@@ -9,20 +7,7 @@ export default function ProfileLayout() {
     >
       <Stack.Screen
         name='profile'
-        options={{
-          headerStyle: { backgroundColor: '#582F0E' },
-          headerLeft: () => (
-            <Link
-              asChild
-              href='/role'
-            >
-              <Pressable onPress={() => {}}>
-                <BackIcon color={'white'} />
-              </Pressable>
-            </Link>
-          ),
-          title: ''
-        }}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name='role'
@@ -30,20 +15,21 @@ export default function ProfileLayout() {
       />
       <Stack.Screen
         name='address'
-        options={{
-          headerStyle: { backgroundColor: '#582F0E' },
-          headerLeft: () => (
-            <Link
-              asChild
-              href='/profile'
-            >
-              <Pressable onPress={() => {}}>
-                <BackIcon color={'white'} />
-              </Pressable>
-            </Link>
-          ),
-          title: ''
-        }}
+        options={{ headerShown: false }}
+        // options={{
+        //   headerStyle: { backgroundColor: '#582F0E' },
+        //   headerLeft: () => (
+        //     <Link
+        //       asChild
+        //       href='/profile'
+        //     >
+        //       <Pressable onPress={() => {}}>
+        //         <BackIcon color={'white'} />
+        //       </Pressable>
+        //     </Link>
+        //   ),
+        //   title: ''
+        // }}
       />
     </Stack>
   )
