@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { updateRole } from '@/services/user'
 import { Role, UserLogged } from '@/interfaces/user'
 import { useSession } from '@/hooks/auth/useSession'
+import { toastAlert } from '@/lib/toast'
 
 export function useRole() {
   const { session, user, signIn } = useSession()
@@ -22,9 +23,13 @@ export function useRole() {
     try {
       const res = await updateRole(role, userObject.id, session)
 
-      router.push(`/profile?role=${roles[0]}`)
-    } catch (error) {
-      alert(error)
+      router.push(`/profile?role=${res.data.role}`)
+    } catch (error: any) {
+      if (error.response.status === 400) {
+        toastAlert(error.response.data.error)
+      } else {
+        toastAlert('Intentalo más tarde.')
+      }
     } finally {
       setIsLoading(false)
     }

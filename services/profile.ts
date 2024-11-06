@@ -3,7 +3,7 @@ import axios from 'axios'
 import { Profile } from '@/interfaces/profile'
 import { tokenSanitized } from '@/lib/validators'
 
-const API_URL = 'http://192.168.11.235:3000'
+const API_URL = process.env.EXPO_PUBLIC_API_URL
 
 export const createProfile = async (data: Profile, token: string) => {
   try {

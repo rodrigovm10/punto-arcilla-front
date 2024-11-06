@@ -1,12 +1,12 @@
 import { useEffect } from 'react'
 import { router, Tabs } from 'expo-router'
 
-import { userHasAddress, userHasProfile } from '@/lib/scripts'
-import { UserLogged } from '@/interfaces/user'
-import { useSession } from '@/hooks/auth/useSession'
-import { CartIcon, HomeIcon, SearchIcon, UserIcon } from '@/components/Icons'
 import { getUser } from '@/services/user'
 import { COLORS } from '@/constants/colors'
+import { UserLogged } from '@/interfaces/user'
+import { useSession } from '@/hooks/auth/useSession'
+import { userHasAddress, userHasProfile } from '@/lib/scripts'
+import { CartIcon, HomeIcon, SearchIcon, UserIcon } from '@/components/Icons'
 
 export default function AppLayout() {
   const { session, user } = useSession()
@@ -44,8 +44,9 @@ export default function AppLayout() {
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: 'white',
-          paddingBottom: 4
+          backgroundColor: 'white'
+          // paddingBottom: 4,
+          // height: 75
         },
         tabBarActiveTintColor: COLORS.secondary,
         tabBarLabelStyle: {
@@ -68,6 +69,7 @@ export default function AppLayout() {
         name='search'
         options={{ title: 'Buscar', tabBarIcon: ({ color }) => <SearchIcon color={color} /> }}
       ></Tabs.Screen>
+
       <Tabs.Screen
         name='cart'
         options={{ title: 'Carrito', tabBarIcon: ({ color }) => <CartIcon color={color} /> }}

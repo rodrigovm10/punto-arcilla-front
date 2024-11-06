@@ -3,7 +3,7 @@ import axios from 'axios'
 import { tokenSanitized } from '@/lib/validators'
 import { Address } from '@/interfaces/address'
 
-const API_URL = 'http://192.168.11.235:3000'
+const API_URL = process.env.EXPO_PUBLIC_API_URL
 
 export const createAddress = async (address: Address, token: string) => {
   try {

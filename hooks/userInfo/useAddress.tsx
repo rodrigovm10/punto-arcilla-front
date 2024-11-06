@@ -7,11 +7,11 @@ import { useSession } from '@/hooks/auth/useSession'
 import { createAddress } from '@/services/address'
 import { UserLogged } from '@/interfaces/user'
 import { router } from 'expo-router'
+import { toastAlert } from '@/lib/toast'
 
 export function useAddress() {
   const { user, session } = useSession()
   const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState('')
 
   const {
     control,
@@ -26,7 +26,6 @@ export function useAddress() {
   const onSubmit = async (data: AddressFormSchema) => {
     if (!user || !session) return
     setIsLoading(true)
-    setError('')
 
     const { houseNumber, postalCode } = data
 
@@ -44,14 +43,14 @@ export function useAddress() {
       router.replace('/product')
     } catch (error: any) {
       if (error.response.status === 400) {
-        setError(error.response.data.error)
+        toastAlert(error.response.data.error)
       } else {
-        setError('Intentalo más tarde.')
+        toastAlert('Intentalo más tarde.')
       }
     } finally {
       setIsLoading(false)
     }
   }
 
-  return { errors, isDirty, control, isValid, handleSubmit, onSubmit, isLoading, error }
+  return { errors, isDirty, control, isValid, handleSubmit, onSubmit, isLoading }
 }

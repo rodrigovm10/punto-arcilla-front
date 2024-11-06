@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { router, useLocalSearchParams } from 'expo-router'
 
+import { toastAlert } from '@/lib/toast'
 import { UserLogged } from '@/interfaces/user'
 import { createProfile } from '@/services/profile'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -39,8 +40,11 @@ export function useProfile() {
       router.push('/address')
       return
     } catch (error: any) {
-      alert(JSON.stringify(error.response.data))
-      throw error
+      if (error.response.status === 400) {
+        toastAlert(error.response.data.error)
+      } else {
+        toastAlert('Intentalo más tarde.')
+      }
     } finally {
       setIsLoading(false)
     }
