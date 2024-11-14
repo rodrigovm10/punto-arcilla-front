@@ -7,7 +7,7 @@ import { userHasAddress, userHasProfile } from '@/lib/scripts'
 import { getUser } from '@/services/user'
 
 export default function ProfileLayout() {
-  const { session, user, isLoadingUser } = useSession()
+  const { session, user } = useSession()
 
   useEffect(() => {
     ;(async () => {

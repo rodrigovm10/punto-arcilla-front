@@ -17,7 +17,7 @@ export default function AppLayout() {
 
       const userObject: UserLogged = JSON.parse(user)
 
-      const userDb = await getUser(userObject.id, session)
+      const userDb = await getUser(userObject?.id, session)
 
       const [hasAddress, addressMessage] = await userHasAddress(user, session)
       const [hasProfile, profileMessage] = await userHasProfile(user, session)
