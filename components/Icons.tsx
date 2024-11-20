@@ -3,6 +3,26 @@ import Entypo from '@expo/vector-icons/Entypo'
 import FontAwsome from '@expo/vector-icons/FontAwesome'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import Feather from '@expo/vector-icons/Feather'
+import EvilIcons from '@expo/vector-icons/EvilIcons'
+import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons'
+
+export const ArrowDownUpIcon = (props: any, name: string) => (
+  <SimpleLineIcons
+    name={name}
+    size={15}
+    color='black'
+    {...props}
+  />
+)
+
+export const HeartIcon = (props: any) => (
+  <AntDesign
+    name='hearto'
+    size={24}
+    color='black'
+    {...props}
+  />
+)
 
 export const PlusIcon = (props: any) => (
   <AntDesign
@@ -50,8 +70,8 @@ export const LogOutIcon = (props: any) => (
 )
 
 export const LocationPinIcon = (props: any) => (
-  <Entypo
-    name='location-pin'
+  <EvilIcons
+    name='location'
     size={24}
     color='black'
     {...props}
@@ -103,7 +123,7 @@ export const SearchIcon = (props: any) => (
   />
 )
 
-export const BackIcon = (props: any) => (
+export const ArrowLeftIcon = (props: any) => (
   <AntDesign
     name='arrowleft'
     size={24}

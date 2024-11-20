@@ -1,71 +1,96 @@
-import { Dropdown as DropdownElement } from 'react-native-element-dropdown'
-import { StyleSheet } from 'react-native'
+import { Pressable, StyleSheet, Text, View } from 'react-native'
 
-import { DropdownItem } from './DropdownItem'
-import { USER_ROLES } from '@/constants/texts'
+import SelectDropdown from 'react-native-select-dropdown'
+import Icon from '@expo/vector-icons/MaterialIcons'
+import { ArrowDownUpIcon } from '../Icons'
+import { TextWrapper } from './TextWrapper'
 
 interface DropdownProps {
-  value: string
-  setValue: (value: string) => void
-  onBlur: () => void
+  tags: string[]
+  handleAddTag: (tag: string) => void
+  handleDeleteTag: (tag: string) => void
 }
 
-export function Dropdown({ value, setValue, onBlur }: DropdownProps) {
+export function Dropdown({ tags, handleAddTag, handleDeleteTag }: DropdownProps) {
+  const tagsArr = ['Platos', 'Vasos', 'Vasijas', 'Artesanias']
+
   return (
-    <DropdownElement
-      style={styles.dropdown}
-      placeholderStyle={styles.placeholderStyle}
-      selectedTextStyle={styles.selectedTextStyle}
-      inputSearchStyle={styles.inputSearchStyle}
-      iconStyle={styles.iconStyle}
-      data={USER_ROLES}
-      value={value}
-      onBlur={onBlur}
-      labelField='label'
-      valueField='value'
-      maxHeight={300}
-      placeholder='Seleccione un rol'
-      onChange={item => {
-        setValue(item.value)
-      }}
-      renderItem={DropdownItem}
-    />
+    <>
+      <SelectDropdown
+        data={tagsArr}
+        onSelect={(selectedItem, index) => {
+          handleAddTag(selectedItem)
+        }}
+        renderButton={(selectedItem, isOpened) => {
+          return (
+            <View
+              style={{
+                backgroundColor: '#936639',
+                paddingVertical: 20,
+                paddingHorizontal: 12,
+                borderRadius: 12,
+                flexDirection: 'row',
+                width: '100%',
+                alignItems: 'center',
+                gap: 10
+              }}
+            >
+              <TextWrapper
+                fontFamily='GraphikSemibold'
+                classProps='font-medium text-white'
+              >
+                Selecciona hasta 3 categroías a las que pertenece tu producto
+              </TextWrapper>
+              <ArrowDownUpIcon
+                color={'white'}
+                name={!isOpened ? 'arrow-down' : 'arrow-up'}
+              />
+            </View>
+          )
+        }}
+        renderItem={(item, index, isSelected) => {
+          return (
+            <View
+              style={{
+                width: 'auto',
+                flexDirection: 'row',
+                paddingHorizontal: 12,
+                justifyContent: 'center',
+                alignItems: 'center',
+                paddingVertical: 8,
+                backgroundColor: isSelected ? '#B6AD90' : '#eee'
+              }}
+            >
+              <TextWrapper
+                fontFamily='GraphikRegular'
+                classProps='flex-1 color-black font-semibold'
+              >
+                {item}
+              </TextWrapper>
+            </View>
+          )
+        }}
+        showsVerticalScrollIndicator={false}
+        dropdownStyle={{ backgroundColor: '#E9ECEF', borderRadius: 8 }}
+      />
+      <View className='flex-row justify-center mt-5 space-x-5 w-full'>
+        {tags.map(tag => (
+          <View className='items-center justify-center bg-orange p-2 border-primary border-2 rounded-3xl'>
+            <TextWrapper
+              fontFamily='GraphikRegular'
+              classProps='text-white '
+            >
+              {tag}{' '}
+              <Pressable
+                className='items-center bg-black/50 w-4 h-4 self-center rounded-full justify-center'
+                onPress={() => handleDeleteTag(tag)}
+              >
+                <Text className='font-semibold self-center text-white text-xs'>x</Text>
+              </Pressable>
+            </TextWrapper>
+          </View>
+        ))}
+      </View>
+    </>
   )
 }
-
-const styles = StyleSheet.create({
-  dropdown: {
-    width: '80%',
-    margin: 16,
-    height: 50,
-    backgroundColor: 'white',
-    borderRadius: 5,
-    padding: 10,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 1
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 1.41,
-
-    elevation: 2
-  },
-  icon: {
-    marginRight: 5
-  },
-  placeholderStyle: {
-    fontSize: 16
-  },
-  selectedTextStyle: {
-    fontSize: 16
-  },
-  iconStyle: {
-    width: 20,
-    height: 20
-  },
-  inputSearchStyle: {
-    height: 40,
-    fontSize: 16
-  }
-})

@@ -21,7 +21,7 @@ export default function ProfileLayout() {
       const [hasProfile] = await userHasProfile(user, session)
 
       if (userDb.data.user.role && hasProfile && hasAddress) {
-        router.replace('/product')
+        router.replace('/(app)/(home)')
       }
 
       if (!userDb.data.user.role && hasProfile && hasAddress) {

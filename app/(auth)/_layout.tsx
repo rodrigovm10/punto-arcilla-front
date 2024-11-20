@@ -6,7 +6,7 @@ export default function AuthLayout() {
   const { session, user } = useSession()
   if (session && user) {
     const userObject: UserLogged = JSON.parse(user)
-    if (userObject.role && userObject.email) return <Redirect href={'/product'} />
+    if (userObject.role && userObject.email) return <Redirect href={'/'} />
   }
 
   return (

@@ -5,6 +5,7 @@ interface ButtonProps {
   onPress: () => void
   disabled?: boolean
   classProps?: string
+  classContextProps?: string
   isLoading?: boolean
   variant?: 'primary' | 'error'
 }
@@ -15,7 +16,8 @@ export function Button({
   disabled = false,
   classProps = '',
   isLoading = false,
-  variant = 'primary'
+  variant = 'primary',
+  classContextProps
 }: ButtonProps) {
   const variantClasses = {
     primary: 'bg-primary',
@@ -36,7 +38,7 @@ export function Button({
           <ActivityIndicator color='#fff' />
         ) : (
           <Text
-            className='font-bold text-white text-center'
+            className={`font-bold text-white text-center ${classContextProps}`}
             style={{ fontFamily: 'GraphikRegular' }}
           >
             {children}

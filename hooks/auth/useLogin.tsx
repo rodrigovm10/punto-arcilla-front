@@ -28,7 +28,7 @@ export function useLogin() {
         user.data.token,
         { id: user.data.user.id, email: user.data.user.email, role: user.data.user.role }
       ])
-      router.replace('/product')
+      router.replace('/(app)/(home)')
     } catch (error: any) {
       if (error.response.status === 400) {
         toastAlert(error.response.data.error)

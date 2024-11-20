@@ -11,7 +11,7 @@ export default function OnboardingScreen() {
   const { session } = useSession()
 
   if (session) {
-    return <Redirect href={'/(app)/product'} />
+    return <Redirect href={'/(app)/(home)'} />
   }
 
   const buttonLabel = (label: string) => {

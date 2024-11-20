@@ -40,7 +40,7 @@ export function useAddress() {
     try {
       await createAddress(dataSanitized, session)
 
-      router.replace('/product')
+      router.replace('/(app)/(home)')
     } catch (error: any) {
       if (error.response.status === 400) {
         toastAlert(error.response.data.error)

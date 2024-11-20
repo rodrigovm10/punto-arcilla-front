@@ -6,7 +6,7 @@ import { COLORS } from '@/constants/colors'
 import { UserLogged } from '@/interfaces/user'
 import { useSession } from '@/hooks/auth/useSession'
 import { userHasAddress, userHasProfile } from '@/lib/scripts'
-import { CartIcon, HomeIcon, SearchIcon, UserIcon } from '@/components/Icons'
+import { CartIcon, HeartIcon, HomeIcon, SearchIcon, UserIcon } from '@/components/Icons'
 
 export default function AppLayout() {
   const { session, user } = useSession()
@@ -58,7 +58,7 @@ export default function AppLayout() {
       }}
     >
       <Tabs.Screen
-        name='product'
+        name='(home)'
         options={{
           title: 'Productos',
           tabBarIcon: ({ color }) => <HomeIcon color={color} />,
@@ -66,13 +66,18 @@ export default function AppLayout() {
         }}
       ></Tabs.Screen>
       <Tabs.Screen
-        name='search'
-        options={{ title: 'Buscar', tabBarIcon: ({ color }) => <SearchIcon color={color} /> }}
+        name='favorites'
+        options={{ title: 'Favoritos', tabBarIcon: ({ color }) => <HeartIcon color={color} /> }}
       ></Tabs.Screen>
 
       <Tabs.Screen
         name='cart'
-        options={{ title: 'Carrito', tabBarIcon: ({ color }) => <CartIcon color={color} /> }}
+        options={{
+          title: 'Carrito',
+          tabBarIcon: ({ color }) => <CartIcon color={color} />,
+          headerShown: true,
+          headerShadowVisible: false
+        }}
       ></Tabs.Screen>
       <Tabs.Screen
         name='account'

@@ -9,9 +9,6 @@ import { useSession } from '@/hooks/auth/useSession'
 import { SessionProvider } from '@/context/authContext'
 
 SplashScreen.preventAutoHideAsync()
-import { Stack } from 'expo-router';
-import { SplashScreen } from 'expo-router';
-//import { CartProvider } from './CartContext';
 
 export default function RootLayout() {
   const [loaded] = useFonts({
@@ -41,7 +38,7 @@ function RootLayoutNav() {
     if (isLoading && isLoadingUser) return
 
     if (session) {
-      router.replace('/product')
+      router.replace('/(app)/(home)')
     } else router.replace('/(onboarding)')
   }, [isLoading, session])
 
@@ -55,16 +52,4 @@ function RootLayoutNav() {
       </SafeAreaProvider>
     </SessionProvider>
   )
-    //<CartProvider>
-    <Stack>
-      <Stack.Screen
-        name='index'
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen name="product-list" options={{ headerShown: true, title: 'Products' }} />
-      <Stack.Screen name="product-detail" options={{ headerShown: true, title: 'Product Details' }} />
-      <Stack.Screen name="cart" options={{ headerShown: true, title: 'Cart' }} />
-    </Stack>
-   // </CartProvider>
-  );
 }

@@ -6,9 +6,10 @@ interface ItemAccountProps {
   name: string
   icon: React.ReactNode
   href?: Href
+  classProps?: string
 }
 
-export function ItemAccount({ name, icon, href }: ItemAccountProps) {
+export function ItemAccount({ name, icon, href, classProps }: ItemAccountProps) {
   return (
     <Link
       className='mb-4 bg-white p-2 rounded-lg flex justify-between flex-row'
@@ -18,7 +19,7 @@ export function ItemAccount({ name, icon, href }: ItemAccountProps) {
         <View className='flex flex-row gap-x-4'>
           {icon}
           <Text
-            className='text-base self-center font-semibold -mt-[5px] '
+            className={`text-base self-center font-semibold -mt-[5px] ${classProps}`}
             style={{ fontFamily: 'GraphikRegular' }}
           >
             {name}

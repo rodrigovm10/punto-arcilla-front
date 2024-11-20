@@ -1,35 +1,29 @@
-import { ABCIcon } from '@/components/Icons'
-import { Button } from '@/components/ui/Button'
-import { useRef, useState } from 'react'
-import { DrawerLayoutAndroid, Text, View } from 'react-native'
+import { ProductList } from '@/components/dashboard/ProductList'
+import { Tabs } from '@/components/dashboard/Tabs'
+import { useState } from 'react'
+import { ScrollView, Text, View } from 'react-native'
 
-export default function Products() {
-  const drawer = useRef<DrawerLayoutAndroid>(null)
-  const [drawerPosition] = useState<'left' | 'right'>('left')
+export default function ProductsScreen() {
+  const [activeTab, setActiveTab] = useState(0)
 
-  const navigationView = () => (
-    <View>
-      <Text>I'm in the Drawer!</Text>
-      <Text>Ordenes</Text>
-      <Text>Chats</Text>
-      <Text>Ventas</Text>
-      {/* <Text>Clientes</Text> */}
-      <Button onPress={() => drawer.current?.closeDrawer()}>Close drawer</Button>
-    </View>
-  )
+  const tabs = [
+    { title: 'Productos publicados', content: <ProductList /> },
+    { title: 'Órdenes', content: <Text>Órdenes hechas</Text> },
+    { title: 'Apartados', content: <Text>Apartados disponibles</Text> }
+  ]
+
+  const handleTabs = (index: number) => {
+    setActiveTab(index)
+  }
 
   return (
-    <DrawerLayoutAndroid
-      ref={drawer}
-      drawerWidth={300}
-      drawerPosition={drawerPosition}
-      renderNavigationView={navigationView}
-    >
-      <View>
-        <Text>Drawer on the {drawerPosition}!</Text>
-
-        <Button onPress={() => drawer.current?.openDrawer()}>Open drawer</Button>
-      </View>
-    </DrawerLayoutAndroid>
+    <View className='flex-1 '>
+      <Tabs
+        tabs={tabs}
+        handleTabs={handleTabs}
+        activeTab={activeTab}
+      />
+      <View> {tabs[activeTab].content}</View>
+    </View>
   )
 }
