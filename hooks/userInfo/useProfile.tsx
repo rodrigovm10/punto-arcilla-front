@@ -33,9 +33,9 @@ export function useProfile() {
 
     const userObject: UserLogged = JSON.parse(user)
 
+    const dataSanitized = { ...data, userId: userObject.id }
+    console.log(dataSanitized)
     try {
-      const dataSanitized = { ...data, user_id: userObject.id }
-
       await createProfile(dataSanitized, session)
       router.push('/address')
       return

@@ -5,11 +5,13 @@ import { Button } from '@/components/ui/Button'
 import { Image } from 'expo-image'
 import { TextWrapper } from '@/components/ui/TextWrapper'
 import { useGetProductById } from '@/hooks/products/useGetProduct'
+import { useCart } from '@/hooks/cart/useCart'
 
 export default function DetailsProductScreen() {
   const router = useRouter()
-  const { id } = useLocalSearchParams()
+  const { id } = useLocalSearchParams<{ id: string }>()
   const { isLoading, error, message, product } = useGetProductById({ id })
+  const { handleAddProduct, isLoading: isLoadingButton } = useCart()
 
   if (isLoading) {
     return (
@@ -64,7 +66,7 @@ export default function DetailsProductScreen() {
       {!message && !error && (
         <>
           <Image
-            source={product?.images}
+            source={{ uri: `data:image/jpeg;base64,${product?.images[0]}` }}
             contentFit='contain'
             className='w-full h-[300px] mt-5'
           />
@@ -88,7 +90,12 @@ export default function DetailsProductScreen() {
               {product?.description}
             </TextWrapper>
             <Text style={styles.description}></Text>
-            <Button onPress={() => alert('Added to cart')}>Add to Cart</Button>
+            <Button
+              isLoading={isLoadingButton}
+              onPress={() => handleAddProduct({ quantity: 1, productId: product?.id!, userId: '' })}
+            >
+              Add to Cart
+            </Button>
           </View>
         </>
       )}

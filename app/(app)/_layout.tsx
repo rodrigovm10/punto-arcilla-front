@@ -13,7 +13,7 @@ export default function AppLayout() {
 
   useEffect(() => {
     ;(async () => {
-      if (!user || !session) return
+      if (!user || !session) return router.replace('/(onboarding)')
 
       const userObject: UserLogged = JSON.parse(user)
 

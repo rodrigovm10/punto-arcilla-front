@@ -30,7 +30,7 @@ export default function ProfileScreen() {
         </Text>
       </View>
 
-      {roleState === 'SELLER' && (
+      {role === 'SELLER' && (
         <>
           {/* <Text
             className='text-base font-bold opacity-60 mb-4'
@@ -73,7 +73,7 @@ export default function ProfileScreen() {
         </>
       )}
 
-      {roleState === 'BUYER' && (
+      {role === 'BUYER' && (
         <>
           <Controller
             control={control}

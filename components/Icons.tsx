@@ -6,6 +6,15 @@ import Feather from '@expo/vector-icons/Feather'
 import EvilIcons from '@expo/vector-icons/EvilIcons'
 import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons'
 
+export const TrashIcon = (props: any) => (
+  <Feather
+    name='trash-2'
+    size={24}
+    color='black'
+    {...props}
+  />
+)
+
 export const ArrowDownUpIcon = (props: any, name: string) => (
   <SimpleLineIcons
     name={name}

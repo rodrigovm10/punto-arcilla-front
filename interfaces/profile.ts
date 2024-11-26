@@ -1,6 +1,6 @@
 export interface Profile {
-  id: string
-  user_id: string
+  // id: string
+  userId: string
   name: string
   bussinessDescription?: string
   avatar?: string

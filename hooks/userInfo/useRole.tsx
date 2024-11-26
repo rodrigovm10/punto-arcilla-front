@@ -22,8 +22,7 @@ export function useRole() {
 
     try {
       const res = await updateRole(role, userObject.id, session)
-
-      router.push(`/profile?role=${res.data.role}`)
+      router.push(`/profile?role=${res.data.user.role}`)
     } catch (error: any) {
       if (error.response.status === 400) {
         toastAlert(error.response.data.error)

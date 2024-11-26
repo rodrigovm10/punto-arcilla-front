@@ -58,7 +58,6 @@ export function useCreateProduct() {
     }
     try {
       const data = await createProduct(sanitizedData, session)
-      console.log(data.data)
       // router.replace('/(products)')
     } catch (error: any) {
       if (error.response.status === 400) {

@@ -20,7 +20,6 @@ export function useGetProductById({ id }: { id: string }) {
 
       try {
         const data = await getProductById(id, session)
-
         setProduct(data.data)
       } catch (error: any) {
         if (error.response.status === 400) {
@@ -32,6 +31,7 @@ export function useGetProductById({ id }: { id: string }) {
         }
       } finally {
         setIsLoading(false)
+        console.log()
       }
     })()
   }, [])

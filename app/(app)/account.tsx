@@ -16,7 +16,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 export default function AccountScreen() {
   const [user, setUser] = useState<UserLogged>()
   const [profile, setProfile] = useState<Profile>()
-  const { user: userSession, session: token } = useSession()
+  const { user: userSession, session: token, signOut } = useSession()
 
   const [isRefreshing, setIsRefreshing] = useState(false)
 
@@ -91,10 +91,11 @@ export default function AccountScreen() {
       <View className='flex self-start px-4 gap-y-4 w-full mt-1'>
         <Pressable
           className='m-0 p-0'
-          onPress={() => {}}
+          onPress={() => signOut()}
         >
-          <ItemAccount
+          {/* <ItemAccount
             name='Cerrar Sesión'
+            href='/(auth)/login'
             icon={
               <LogOutIcon
                 className='opacity-80 self-center text-red-600'
@@ -102,7 +103,8 @@ export default function AccountScreen() {
               />
             }
             classProps='text-red-600'
-          />
+          /> */}
+          <Text>a</Text>
         </Pressable>
       </View>
     </View>
