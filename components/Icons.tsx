@@ -79,8 +79,8 @@ export const LogOutIcon = (props: any) => (
 )
 
 export const LocationPinIcon = (props: any) => (
-  <EvilIcons
-    name='location'
+  <SimpleLineIcons
+    name='location-pin'
     size={24}
     color='black'
     {...props}

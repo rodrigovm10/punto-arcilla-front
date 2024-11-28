@@ -18,3 +18,17 @@ export const createAddress = async (address: Address, token: string) => {
     throw error
   }
 }
+
+export const getAddress = async (userId: string, token: string) => {
+  try {
+    const res = await axios.get(`${API_URL}/api/address/${userId}`, {
+      headers: {
+        Authorization: tokenSanitized(token)
+      }
+    })
+
+    return res
+  } catch (error) {
+    throw error
+  }
+}

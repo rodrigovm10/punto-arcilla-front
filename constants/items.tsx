@@ -1,7 +1,13 @@
-import { LocationPinIcon, NotificationIcon, ProfileIcon, ShoppingBagIcon } from '@/components/Icons'
+import {
+  LocationPinIcon,
+  NotificationIcon,
+  ProfileIcon,
+  ShoppingBagIcon,
+  UserIcon
+} from '@/components/Icons'
 import { Href } from 'expo-router'
 
-interface AccountItem {
+export interface AccountItem {
   id: number
   name: string
   icon: React.ReactNode
@@ -14,12 +20,12 @@ export const ACCOUNT_ITEMS: AccountItem[] = [
     id: 1,
     name: 'Perfil',
     icon: (
-      <ProfileIcon
+      <UserIcon
         className='opacity-80 self-center'
-        size={14}
+        size={18}
       />
     ),
-    href: '/(products)/index'
+    href: '/'
   },
   {
     id: 2,
@@ -27,10 +33,10 @@ export const ACCOUNT_ITEMS: AccountItem[] = [
     icon: (
       <LocationPinIcon
         className='opacity-80 self-center'
-        size={14}
+        size={18}
       />
     ),
-    href: '/(products)'
+    href: '/(address)'
   },
   {
     id: 3,
@@ -38,7 +44,7 @@ export const ACCOUNT_ITEMS: AccountItem[] = [
     icon: (
       <ProfileIcon
         className='opacity-80 self-center'
-        size={14}
+        size={18}
       />
     ),
     href: '/(products)'
@@ -49,10 +55,10 @@ export const ACCOUNT_ITEMS: AccountItem[] = [
     icon: (
       <ShoppingBagIcon
         className='opacity-80 self-center'
-        size={14}
+        size={18}
       />
     ),
-    href: '/(products)/index'
+    href: '/'
   },
   {
     id: 5,
@@ -60,10 +66,10 @@ export const ACCOUNT_ITEMS: AccountItem[] = [
     icon: (
       <NotificationIcon
         className='opacity-80 self-center'
-        size={14}
+        size={18}
       />
     ),
-    href: '/(products)/index'
+    href: '/'
   }
 ]
 

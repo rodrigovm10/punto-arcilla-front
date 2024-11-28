@@ -1,14 +1,15 @@
 import { ItemAccount } from '@/components/account/ItemAccount'
 import { LogOutIcon } from '@/components/Icons'
 import { Separator } from '@/components/ui/Separator'
-import { ACCOUNT_ITEMS } from '@/constants/items'
+import { TextWrapper } from '@/components/ui/TextWrapper'
+import { ACCOUNT_ITEMS, AccountItem } from '@/constants/items'
 import { useSession } from '@/hooks/auth/useSession'
 import { Profile } from '@/interfaces/profile'
-import { UserLogged } from '@/interfaces/user'
+import { Role, UserLogged } from '@/interfaces/user'
 import { getProfile, getUser } from '@/services/user'
 import { Image } from 'expo-image'
 import { useEffect, useState } from 'react'
-import { FlatList, Pressable, RefreshControl, ScrollView } from 'react-native'
+import { Pressable, RefreshControl, ScrollView } from 'react-native'
 
 import { Text, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
@@ -17,6 +18,7 @@ export default function AccountScreen() {
   const [user, setUser] = useState<UserLogged>()
   const [profile, setProfile] = useState<Profile>()
   const { user: userSession, session: token, signOut } = useSession()
+  const [items, setItems] = useState<AccountItem[]>(ACCOUNT_ITEMS)
 
   const [isRefreshing, setIsRefreshing] = useState(false)
 
@@ -31,6 +33,22 @@ export default function AccountScreen() {
 
     setUser(userDb.data)
     setProfile(profileDb.data)
+    // Mapeo bidireccional entre Role y strings
+    const RoleStringMap = {
+      [Role.SELLER]: 'SELLER',
+      [Role.BUYER]: 'BUYER'
+    }
+
+    const StringToRoleMap = {
+      SELLER: Role.SELLER,
+      BUYER: Role.BUYER
+    }
+    if (user?.role === RoleStringMap[Role.SELLER]) {
+      setItems(ACCOUNT_ITEMS.filter(item => item.name !== 'Compras'))
+    }
+    if (user?.role === RoleStringMap[Role.BUYER]) {
+      setItems(ACCOUNT_ITEMS.filter(item => item.name !== 'Productos'))
+    }
   }
 
   const onRefresh = async () => {
@@ -44,7 +62,15 @@ export default function AccountScreen() {
   }, [])
 
   return (
-    <View className='flex items-center bg-white flex-1'>
+    <ScrollView
+      refreshControl={
+        <RefreshControl
+          refreshing={isRefreshing}
+          onRefresh={onRefresh}
+        />
+      }
+      className='flex bg-white flex-1'
+    >
       <View className='self-center'>
         {profile?.avatar ? (
           <Image source={profile?.avatar} />
@@ -68,45 +94,33 @@ export default function AccountScreen() {
       </View>
       <Separator classProps='mt-6 mb-5' />
       <View className='flex px-4 w-full'>
-        <FlatList
-          data={ACCOUNT_ITEMS}
-          // refreshControl={
-          //   <RefreshControl
-          //     refreshing={isRefreshing}
-          //     progressViewOffset={top}
-          //     onRefresh={onRefresh}
-          //   />
-          // }
-          renderItem={({ item }) => (
-            <ItemAccount
-              name={item.name}
-              icon={item.icon}
-              href={item.href}
-            />
-          )}
-          keyExtractor={item => item.id.toString()}
-        />
+        {items.map(item => (
+          <ItemAccount
+            key={item.id}
+            name={item.name}
+            icon={item.icon}
+            href={item.href}
+          />
+        ))}
       </View>
       <Separator />
       <View className='flex self-start px-4 gap-y-4 w-full mt-1'>
         <Pressable
-          className='m-0 p-0'
+          className='m-0 p-0 flex-row items-center'
           onPress={() => signOut()}
         >
-          {/* <ItemAccount
-            name='Cerrar Sesión'
-            href='/(auth)/login'
-            icon={
-              <LogOutIcon
-                className='opacity-80 self-center text-red-600'
-                size={14}
-              />
-            }
-            classProps='text-red-600'
-          /> */}
-          <Text>a</Text>
+          <LogOutIcon
+            className='opacity-80 self-center text-red-600'
+            size={14}
+          />
+          <TextWrapper
+            fontFamily='GraphikMedium'
+            classProps='text-red-600 self-start ml-2 text-base'
+          >
+            Cerrar Sesión
+          </TextWrapper>
         </Pressable>
       </View>
-    </View>
+    </ScrollView>
   )
 }

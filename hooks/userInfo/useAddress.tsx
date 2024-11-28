@@ -12,6 +12,7 @@ import { toastAlert } from '@/lib/toast'
 export function useAddress() {
   const { user, session } = useSession()
   const [isLoading, setIsLoading] = useState(false)
+  const [isLoadingUpdate, setIsLoadingUpdate] = useState(false)
 
   const {
     control,
@@ -52,5 +53,34 @@ export function useAddress() {
     }
   }
 
-  return { errors, isDirty, control, isValid, handleSubmit, onSubmit, isLoading }
+  const onSubmitUpdate = async (data: AddressFormSchema) => {
+    if (!user || !session) return
+    setIsLoadingUpdate(true)
+
+    const { houseNumber, postalCode } = data
+
+    const userObject: UserLogged = JSON.parse(user)
+
+    const dataSanitized = {
+      ...data,
+      userId: userObject.id,
+      houseNumber: Number(houseNumber),
+      postalCode: Number(postalCode)
+    }
+    try {
+      await createAddress(dataSanitized, session)
+
+      router.replace('/(app)/(home)')
+    } catch (error: any) {
+      if (error.response.status === 400) {
+        toastAlert(error.response.data.error)
+      } else {
+        toastAlert('Intentalo más tarde.')
+      }
+    } finally {
+      setIsLoadingUpdate(false)
+    }
+  }
+
+  return { errors, isDirty, control, isValid, handleSubmit, onSubmit, onSubmitUpdate, isLoading }
 }

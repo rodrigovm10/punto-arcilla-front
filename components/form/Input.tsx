@@ -15,6 +15,7 @@ interface InputProps {
   isPassword?: boolean
   keyBoardType?: KeyboardTypeOptions
   priceType?: boolean
+  defaultValue?: string
 }
 
 export function Input({
@@ -26,7 +27,8 @@ export function Input({
   label,
   isPassword = false,
   keyBoardType,
-  priceType = false
+  priceType = false,
+  defaultValue
 }: InputProps) {
   const [loaded] = useFonts({
     GraphikBold: require('../../assets/fonts/GraphikBold.otf'),
@@ -49,6 +51,7 @@ export function Input({
         <TextInput
           onChangeText={onChange}
           onBlur={onBlur}
+          defaultValue={defaultValue}
           value={priceType ? `$${value}` : value}
           className={`w-full py-3 border-[#ccc] border-[2px] border-t-0 border-x-0 focus:caret-primary font-semibold text-lg ${
             errors[typeError] ? 'border-b-red-500' : 'border-b-gray-300'

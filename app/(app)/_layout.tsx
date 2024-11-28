@@ -83,6 +83,7 @@ export default function AppLayout() {
         name='account'
         options={{
           title: 'Cuenta',
+          headerShadowVisible: false,
           tabBarIcon: ({ color }) => <UserIcon color={color} />,
           headerShown: true
         }}

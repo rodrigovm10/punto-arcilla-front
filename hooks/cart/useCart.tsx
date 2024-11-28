@@ -109,7 +109,7 @@ export function useCart() {
       if (error.response.status === 400) {
         toastAlert(error.response.data.error)
       } else {
-        toastAlert('Intentalo más tarde.')
+        // toastAlert('Intentalo más tarde.')
       }
     } finally {
       setIsLoadingCart(false)

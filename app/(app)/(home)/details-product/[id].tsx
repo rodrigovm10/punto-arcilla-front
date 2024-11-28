@@ -24,20 +24,18 @@ export default function DetailsProductScreen() {
   }
 
   return (
-    <View className='flex-1 mt-10'>
+    <View className='flex-1'>
       <Stack.Screen
         options={{
           title: '',
-          headerStyle: { backgroundColor: 'transparent' },
+          headerStyle: { backgroundColor: 'white' },
           headerTransparent: true,
           headerLeft: () => (
             <Pressable
               onPress={() => router.back()}
               className='rounded-full bg-white p-2'
             >
-              <Pressable>
-                <ArrowLeftIcon />
-              </Pressable>
+              <ArrowLeftIcon />
             </Pressable>
           ),
           headerRight: () => (
@@ -90,12 +88,26 @@ export default function DetailsProductScreen() {
               {product?.description}
             </TextWrapper>
             <Text style={styles.description}></Text>
-            <Button
-              isLoading={isLoadingButton}
-              onPress={() => handleAddProduct({ quantity: 1, productId: product?.id!, userId: '' })}
-            >
-              Add to Cart
-            </Button>
+            <View className='flex-row justify-between'>
+              <Button
+                classProps='w-[45%]'
+                isLoading={isLoadingButton}
+                onPress={() =>
+                  handleAddProduct({ quantity: 1, productId: product?.id!, userId: '' })
+                }
+              >
+                Añadir al carrito
+              </Button>
+              <Button
+                classProps='w-[45%]'
+                isLoading={isLoadingButton}
+                onPress={() =>
+                  handleAddProduct({ quantity: 1, productId: product?.id!, userId: '' })
+                }
+              >
+                Apartar producto
+              </Button>
+            </View>
           </View>
         </>
       )}
