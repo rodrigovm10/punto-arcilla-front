@@ -26,7 +26,7 @@ export function Button({
 
   return (
     <TouchableOpacity
-      className={`py-4 mt-3 w-full items-center rounded-xl ${variantClasses[variant]} ${
+      className={`py-4 mt-3 w-full items-center rounded-lg ${variantClasses[variant]} ${
         (disabled || isLoading) && 'bg-alloyOrange'
       } ${classProps} `}
       onPress={onPress}

@@ -25,7 +25,7 @@ export const ACCOUNT_ITEMS: AccountItem[] = [
         size={18}
       />
     ),
-    href: '/'
+    href: '/(user-info)/update-profile'
   },
   {
     id: 2,

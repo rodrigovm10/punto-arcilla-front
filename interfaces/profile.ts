@@ -5,3 +5,8 @@ export interface Profile {
   bussinessDescription?: string
   avatar?: string
 }
+
+export interface UpdateProfile {
+  name?: string
+  bussinessDescription?: string
+}

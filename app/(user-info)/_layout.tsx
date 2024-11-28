@@ -5,6 +5,8 @@ import { UserLogged } from '@/interfaces/user'
 import { useSession } from '@/hooks/auth/useSession'
 import { userHasAddress, userHasProfile } from '@/lib/scripts'
 import { getUser } from '@/services/user'
+import { ArrowLeftIcon } from '@/components/Icons'
+import { Pressable } from 'react-native'
 
 export default function ProfileLayout() {
   const { session, user } = useSession()
@@ -49,6 +51,22 @@ export default function ProfileLayout() {
       <Stack.Screen
         name='address'
         options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name='update-profile'
+        options={{
+          title: '',
+          headerShadowVisible: false,
+          headerStyle: { backgroundColor: 'white' },
+          headerLeft: () => (
+            <Pressable
+              onPress={() => router.back()}
+              className='rounded-full bg-white p-2'
+            >
+              <ArrowLeftIcon />
+            </Pressable>
+          )
+        }}
       />
     </Stack>
   )

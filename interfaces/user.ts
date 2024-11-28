@@ -25,6 +25,13 @@ export interface UserLogged {
   role: Role | null
 }
 
+export interface GetUser {
+  id: string
+  email: string
+  password: string
+  role: string
+}
+
 export enum Role {
   BUYER,
   SELLER

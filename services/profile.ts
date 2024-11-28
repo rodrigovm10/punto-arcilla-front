@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import { Profile } from '@/interfaces/profile'
+import { Profile, UpdateProfile } from '@/interfaces/profile'
 import { tokenSanitized } from '@/lib/validators'
 
 const API_URL = process.env.EXPO_PUBLIC_API_URL
@@ -19,13 +19,13 @@ export const createProfile = async (data: Profile, token: string) => {
   }
 }
 
-interface UpdateProfile {
+interface UpdateProfileProps {
   id: string
-  data: Profile
+  data: UpdateProfile
   token: string
 }
 
-export const updateProfile = async ({ id, data, token }: UpdateProfile) => {
+export const updateProfile = async ({ id, data, token }: UpdateProfileProps) => {
   try {
     const res = await axios.patch(`${API_URL}/api/profile/${id}`, data, {
       headers: {

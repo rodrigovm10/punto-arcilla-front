@@ -26,3 +26,10 @@ export const profileFormSchema = z.object({
 })
 
 export type ProfileFormSchema = z.infer<typeof profileFormSchema>
+
+export const updateProfileFormSchema = z.object({
+  name: z.string({ message: 'Este campo es obligatorio' }).optional(),
+  businessDescription: z.string().optional()
+})
+
+export type UpdateProfileFormSchema = z.infer<typeof updateProfileFormSchema>
