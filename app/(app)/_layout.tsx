@@ -67,7 +67,12 @@ export default function AppLayout() {
       ></Tabs.Screen>
       <Tabs.Screen
         name='favorites'
-        options={{ title: 'Favoritos', tabBarIcon: ({ color }) => <HeartIcon color={color} /> }}
+        options={{
+          title: 'Favoritos',
+          headerShown: true,
+          headerShadowVisible: false,
+          tabBarIcon: ({ color }) => <HeartIcon color={color} />
+        }}
       ></Tabs.Screen>
 
       <Tabs.Screen

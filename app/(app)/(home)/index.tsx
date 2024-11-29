@@ -1,18 +1,12 @@
 import { ActivityIndicator, FlatList, RefreshControl, Text, View } from 'react-native'
 
-import { useEffect, useState } from 'react'
 import { ProductCard } from '@/components/products/ProductCard'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { InputSearch } from '@/components/ui/InputSearch'
-import { PRODUCTS } from '@/constants/items'
-import { useSession } from '@/hooks/auth/useSession'
-import { getAllProducts } from '@/services/products'
-import { Product } from '@/interfaces/product'
-import { toastAlert } from '@/lib/toast'
+
 import { useGetAllProducts } from '@/hooks/products/useGetAllProducts'
 
 export default function ProductScreen() {
-  const { isLoading, isRefreshing, products, onRefresh } = useGetAllProducts()
+  const { isLoading, isRefreshing, products, onRefresh, onChangeSearch } = useGetAllProducts()
 
   return (
     <View className='flex-1 bg-white'>
@@ -23,7 +17,7 @@ export default function ProductScreen() {
         >
           Encuentra diferentes productos
         </Text>
-        <InputSearch />
+        <InputSearch onChangeEvent={onChangeSearch} />
         {isLoading && (
           <ActivityIndicator
             color='#582F0E'

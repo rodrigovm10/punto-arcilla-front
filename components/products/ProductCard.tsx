@@ -27,6 +27,7 @@ export function ProductCard({
     setIsLoading(true)
     try {
       await handleDeleteProduct(id)
+      console.log('click')
     } catch (error) {
     } finally {
       setIsLoading(false)

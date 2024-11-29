@@ -1,66 +1,20 @@
 import { ItemAccount } from '@/components/account/ItemAccount'
 import { LogOutIcon } from '@/components/Icons'
+import { Loader } from '@/components/ui/Loader'
 import { Separator } from '@/components/ui/Separator'
 import { TextWrapper } from '@/components/ui/TextWrapper'
-import { ACCOUNT_ITEMS, AccountItem } from '@/constants/items'
-import { useSession } from '@/hooks/auth/useSession'
-import { Profile } from '@/interfaces/profile'
-import { Role, UserLogged } from '@/interfaces/user'
-import { getProfile, getUser } from '@/services/user'
+import { useAccount } from '@/hooks/account/useAccount'
 import { Image } from 'expo-image'
-import { useEffect, useState } from 'react'
 import { Pressable, RefreshControl, ScrollView } from 'react-native'
 
 import { Text, View } from 'react-native'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 export default function AccountScreen() {
-  const [user, setUser] = useState<UserLogged>()
-  const [profile, setProfile] = useState<Profile>()
-  const { user: userSession, session: token, signOut } = useSession()
-  const [items, setItems] = useState<AccountItem[]>(ACCOUNT_ITEMS)
+  const { isRefreshing, onRefresh, profile, user, items, isLoading, signOut } = useAccount()
 
-  const [isRefreshing, setIsRefreshing] = useState(false)
-
-  const { top } = useSafeAreaInsets()
-
-  const fetchUserData = async () => {
-    if (!userSession || !token) return
-
-    const userSessionObject: UserLogged = JSON.parse(userSession)
-    const userDb = await getUser(userSessionObject.id, token)
-    const profileDb = await getProfile(userSessionObject.id, token)
-
-    setUser(userDb.data)
-    setProfile(profileDb.data)
-    // Mapeo bidireccional entre Role y strings
-    const RoleStringMap = {
-      [Role.SELLER]: 'SELLER',
-      [Role.BUYER]: 'BUYER'
-    }
-
-    const StringToRoleMap = {
-      SELLER: Role.SELLER,
-      BUYER: Role.BUYER
-    }
-    if (user?.role === RoleStringMap[Role.SELLER]) {
-      setItems(ACCOUNT_ITEMS.filter(item => item.name !== 'Compras'))
-    }
-    if (user?.role === RoleStringMap[Role.BUYER]) {
-      setItems(ACCOUNT_ITEMS.filter(item => item.name !== 'Productos'))
-    }
+  if (isLoading) {
+    return <Loader />
   }
-
-  const onRefresh = async () => {
-    setIsRefreshing(true)
-    await fetchUserData()
-    setIsRefreshing(false)
-  }
-
-  useEffect(() => {
-    fetchUserData()
-  }, [])
-
   return (
     <ScrollView
       refreshControl={

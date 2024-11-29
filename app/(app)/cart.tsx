@@ -1,20 +1,14 @@
-import { ArrowRightIcon, CartIcon, LocationPinIcon, TrashIcon } from '@/components/Icons'
+import { ArrowRightIcon, LocationPinIcon, TrashIcon } from '@/components/Icons'
 import { Button } from '@/components/ui/Button'
 import { Separator } from '@/components/ui/Separator'
 import { TextWrapper } from '@/components/ui/TextWrapper'
+import { useAddress } from '@/hooks/address/useAddress'
 import { useCart } from '@/hooks/cart/useCart'
-import React, { useState } from 'react'
-import {
-  View,
-  Image,
-  TouchableOpacity,
-  FlatList,
-  Text,
-  ActivityIndicator,
-  Pressable
-} from 'react-native'
+import { View, Image, TouchableOpacity, FlatList, ActivityIndicator, Pressable } from 'react-native'
 
 export default function Cart() {
+  const { address } = useAddress()
+
   const { cart, isLoadingCart, handleDeleteProduct, handleUpdateProductQuantity } = useCart()
   const handleQuantityChange = async (id: string, action: 'increase' | 'decrease') => {
     cart.forEach(async item => {
@@ -24,7 +18,6 @@ export default function Cart() {
         await handleUpdateProductQuantity(id, newQuantity)
       }
     })
-    // setCart(updatedCart)
   }
 
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
@@ -33,19 +26,15 @@ export default function Cart() {
     <View className='flex-1'>
       <View className='mb-5 bg-white py-6 rounded-2xl  '>
         <View className='flex flex-row items-center bg-gray-100 px-2 py-4 mx-4 rounded-md justify-between'>
-          <View className='flex flex-row'>
-            <LocationPinIcon />
+          <View className='flex flex-row mb'>
+            <LocationPinIcon className='mr-2' />
             <TextWrapper
               fontFamily='GraphikMedium'
-              classProps='font-bold'
+              classProps='font-bold items-end'
             >
-              San Luis de la Paz
+              {address?.street} {address?.houseNumber} - {address?.city} {address?.state}
             </TextWrapper>
           </View>
-          <ArrowRightIcon
-            size={14}
-            className=' text-black/60'
-          />
         </View>
       </View>
       {isLoadingCart && (

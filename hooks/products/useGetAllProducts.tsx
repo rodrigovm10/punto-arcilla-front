@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import { useSession } from '../auth/useSession'
 import { getAllProducts } from '@/services/products'
 import { toastAlert } from '@/lib/toast'
 import { Product } from '@/interfaces/product'
+import { NativeSyntheticEvent, TextInputChangeEventData } from 'react-native'
 
 export function useGetAllProducts() {
   const { session } = useSession()
@@ -10,6 +11,21 @@ export function useGetAllProducts() {
   const [isRefreshing, setIsRefreshing] = useState(false)
   const [products, setProducts] = useState<Product[]>()
   const [isLoading, setIsLoading] = useState(false)
+
+  const onChangeSearch = async (e: NativeSyntheticEvent<TextInputChangeEventData>) => {
+    const { nativeEvent } = e
+    const text = nativeEvent.text.trim()
+
+    if (!text) {
+      await fetchData()
+      return
+    }
+
+    setProducts(
+      prevState =>
+        prevState?.filter(item => item.name.toLowerCase().includes(text.toLowerCase())) || []
+    )
+  }
 
   const fetchData = async () => {
     if (!session) return
@@ -39,5 +55,5 @@ export function useGetAllProducts() {
     await fetchData()
     setIsRefreshing(false)
   }
-  return { isRefreshing, products, isLoading, onRefresh }
+  return { isRefreshing, products, isLoading, onRefresh, onChangeSearch }
 }

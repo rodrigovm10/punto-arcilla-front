@@ -1,11 +1,14 @@
-import { TextInput, View } from 'react-native'
+import { NativeSyntheticEvent, TextInput, TextInputChangeEventData, View } from 'react-native'
 import { SearchIcon } from '../Icons'
+import { Product } from '@/interfaces/product'
+import { ChangeEvent } from 'react'
 
 interface InputSearchProps {
   classProps?: string
+  onChangeEvent: (e: NativeSyntheticEvent<TextInputChangeEventData>) => void
 }
 
-export function InputSearch({ classProps }: InputSearchProps) {
+export function InputSearch({ classProps, onChangeEvent }: InputSearchProps) {
   return (
     <View className='relative'>
       <SearchIcon
@@ -17,6 +20,7 @@ export function InputSearch({ classProps }: InputSearchProps) {
         placeholder='Buscar'
         selectionColor={'#582f0e'}
         style={{ fontFamily: 'GraphikMedium' }}
+        onChange={onChangeEvent}
       />
     </View>
   )

@@ -6,13 +6,14 @@ import { Image } from 'expo-image'
 import { TextWrapper } from '@/components/ui/TextWrapper'
 import { useGetProductById } from '@/hooks/products/useGetProduct'
 import { useCart } from '@/hooks/cart/useCart'
+import { useFavorite } from '@/hooks/favorites/useFavorite'
 
 export default function DetailsProductScreen() {
   const router = useRouter()
   const { id } = useLocalSearchParams<{ id: string }>()
   const { isLoading, error, message, product } = useGetProductById({ id })
   const { handleAddProduct, isLoading: isLoadingButton } = useCart()
-
+  const { handleAddProductToFavorite } = useFavorite()
   if (isLoading) {
     return (
       <ActivityIndicator
@@ -39,9 +40,12 @@ export default function DetailsProductScreen() {
             </Pressable>
           ),
           headerRight: () => (
-            <View className='rounded-full bg-white p-2'>
+            <Pressable
+              onPress={() => handleAddProductToFavorite(id)}
+              className='rounded-full bg-white p-2'
+            >
               <HeartIcon />
-            </View>
+            </Pressable>
           )
         }}
       />

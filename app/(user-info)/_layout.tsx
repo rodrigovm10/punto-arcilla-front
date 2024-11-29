@@ -60,7 +60,7 @@ export default function ProfileLayout() {
           headerStyle: { backgroundColor: 'white' },
           headerLeft: () => (
             <Pressable
-              onPress={() => router.back()}
+              onPress={() => router.replace('/(app)/account')}
               className='rounded-full bg-white p-2'
             >
               <ArrowLeftIcon />

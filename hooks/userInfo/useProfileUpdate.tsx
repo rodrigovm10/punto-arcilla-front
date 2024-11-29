@@ -12,8 +12,10 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { getProfile, getUser } from '@/services/user'
 import { UpdateProfile } from '@/interfaces/profile'
+import { useRouter } from 'expo-router'
 
 export function useProfileUpdate() {
+  const router = useRouter()
   const { user, session } = useSession()
   const [profile, setProfile] = useState<UpdateProfile>()
   const [role, setRole] = useState<string>('')
@@ -58,7 +60,6 @@ export function useProfileUpdate() {
     setIsLoading(true)
 
     const userObject: UserLogged = JSON.parse(user)
-    console.log(data)
     try {
       await updateProfile({ id: userObject.id, data, token: session })
       toastAlert('Información actualizada.')

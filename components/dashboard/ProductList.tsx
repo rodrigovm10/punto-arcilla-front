@@ -6,19 +6,21 @@ import { InputSearch } from '../ui/InputSearch'
 import { ProductCard } from '../products/ProductCard'
 import { useGetUserProducts } from '@/hooks/products/useGetUserProducts'
 import { TextWrapper } from '../ui/TextWrapper'
+import { Loader } from '../ui/Loader'
 
 export function ProductList() {
-  const { products, message, isLoading, error, isLoadingDeleteProduct, handleDeleteProduct } =
-    useGetUserProducts()
+  const {
+    products,
+    message,
+    isLoading,
+    error,
+    isLoadingDeleteProduct,
+    handleDeleteProduct,
+    onChangeSearch
+  } = useGetUserProducts()
 
   if (isLoading) {
-    return (
-      <ActivityIndicator
-        color='#582F0E'
-        size='large'
-        className='flex-1 items-center justify-center'
-      />
-    )
+    return <Loader />
   }
 
   return (
@@ -26,7 +28,10 @@ export function ProductList() {
       <View>
         <View className='flex flex-row justify-between'>
           <View className='flex-1'>
-            <InputSearch classProps='' />
+            <InputSearch
+              classProps=''
+              onChangeEvent={onChangeSearch}
+            />
           </View>
           <Button
             onPress={() => router.push('/(products)/product-form')}

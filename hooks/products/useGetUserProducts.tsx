@@ -4,6 +4,7 @@ import { Product } from '@/interfaces/product'
 import { UserLogged } from '@/interfaces/user'
 import { deleteProduct, getProductsByUserId } from '@/services/products'
 import { toastAlert } from '@/lib/toast'
+import { NativeSyntheticEvent, TextInputChangeEventData } from 'react-native'
 
 export function useGetUserProducts() {
   const { user, session } = useSession()
@@ -13,6 +14,21 @@ export function useGetUserProducts() {
   const [isLoadingDeleteProduct, setIsLoadingDeleteProduct] = useState(false)
   const [error, setError] = useState('')
   const [message, setMessage] = useState('')
+
+  const onChangeSearch = async (e: NativeSyntheticEvent<TextInputChangeEventData>) => {
+    const { nativeEvent } = e
+    const text = nativeEvent.text.trim()
+
+    if (!text) {
+      await fetchProducts()
+      return
+    }
+
+    setProducts(
+      prevState =>
+        prevState?.filter(item => item.name.toLowerCase().includes(text.toLowerCase())) || []
+    )
+  }
 
   const fetchProducts = async () => {
     if (!user || !session) return
@@ -45,6 +61,7 @@ export function useGetUserProducts() {
       toastAlert('Producto eliminado')
       await fetchProducts()
     } catch (error: any) {
+      console.log(error.response)
       if (error.response.status === 400) {
         toastAlert(error.response.data.error)
       } else {
@@ -61,5 +78,13 @@ export function useGetUserProducts() {
     })()
   }, [])
 
-  return { products, error, isLoading, message, handleDeleteProduct, isLoadingDeleteProduct }
+  return {
+    products,
+    error,
+    isLoading,
+    message,
+    handleDeleteProduct,
+    isLoadingDeleteProduct,
+    onChangeSearch
+  }
 }
