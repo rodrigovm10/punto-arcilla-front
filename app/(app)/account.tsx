@@ -5,12 +5,14 @@ import { Separator } from '@/components/ui/Separator'
 import { TextWrapper } from '@/components/ui/TextWrapper'
 import { useAccount } from '@/hooks/account/useAccount'
 import { Image } from 'expo-image'
+import { Role } from '@/interfaces/user'
 import { Pressable, RefreshControl, ScrollView } from 'react-native'
 
 import { Text, View } from 'react-native'
+import { ACCOUNT_ITEMS, ACCOUNT_ITEMS_SELLER } from '@/constants/items'
 
 export default function AccountScreen() {
-  const { isRefreshing, onRefresh, profile, user, items, isLoading, signOut } = useAccount()
+  const { isRefreshing, onRefresh, profile, user, isLoading, signOut } = useAccount()
 
   if (isLoading) {
     return <Loader />
@@ -48,14 +50,24 @@ export default function AccountScreen() {
       </View>
       <Separator classProps='mt-6 mb-5' />
       <View className='flex px-4 w-full'>
-        {items.map(item => (
-          <ItemAccount
-            key={item.id}
-            name={item.name}
-            icon={item.icon}
-            href={item.href}
-          />
-        ))}
+        {user?.role === Role.SELLER &&
+          ACCOUNT_ITEMS_SELLER.map(item => (
+            <ItemAccount
+              key={item.id}
+              name={item.name}
+              icon={item.icon}
+              href={item.href}
+            />
+          ))}
+        {user?.role === Role.BUYER &&
+          ACCOUNT_ITEMS.map(item => (
+            <ItemAccount
+              key={item.id}
+              name={item.name}
+              icon={item.icon}
+              href={item.href}
+            />
+          ))}
       </View>
       <Separator />
       <View className='flex self-start px-4 gap-y-4 w-full mt-1'>

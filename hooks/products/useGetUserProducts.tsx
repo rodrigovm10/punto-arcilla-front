@@ -61,7 +61,6 @@ export function useGetUserProducts() {
       toastAlert('Producto eliminado')
       await fetchProducts()
     } catch (error: any) {
-      console.log(error.response)
       if (error.response.status === 400) {
         toastAlert(error.response.data.error)
       } else {

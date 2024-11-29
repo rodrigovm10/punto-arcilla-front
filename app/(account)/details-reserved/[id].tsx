@@ -1,32 +1,33 @@
 import { useRouter, useLocalSearchParams, Stack } from 'expo-router'
-import { View, Text, StyleSheet, Pressable, ActivityIndicator } from 'react-native'
-import { ArrowLeftIcon, HeartIcon } from '@/components/Icons'
+import { View, Text, StyleSheet, Pressable } from 'react-native'
+import { ArrowLeftIcon } from '@/components/Icons'
 import { Button } from '@/components/ui/Button'
 import { Image } from 'expo-image'
 import { TextWrapper } from '@/components/ui/TextWrapper'
 import { useGetProductById } from '@/hooks/products/useGetProduct'
-import { useCart } from '@/hooks/cart/useCart'
-import { useFavorite } from '@/hooks/favorites/useFavorite'
+import { Loader } from '@/components/ui/Loader'
+import { useState } from 'react'
 import { useCustomerReserved } from '@/hooks/reserved/useCustomerReserved'
 
 export default function DetailsProductScreen() {
   const router = useRouter()
-  const { id } = useLocalSearchParams<{ id: string }>()
+  const { id, reservedId } = useLocalSearchParams<{ id: string; reservedId: string }>()
   const { isLoading, error, message, product } = useGetProductById({ id })
-  const { handleAddProduct, isLoading: isLoadingButton } = useCart()
-  const { handleAddProductToFavorite } = useFavorite()
-  const { addProductToReserved, isLoadingButtonReserved } = useCustomerReserved()
+  const [isLoadingButton, setIsLoadingButton] = useState(false)
+  const { cancelReserved } = useCustomerReserved()
 
-  if (isLoading) {
-    return (
-      <ActivityIndicator
-        color='#582F0E'
-        size='large'
-        className='flex-1 items-center justify-center'
-      />
-    )
+  const handleCancelReserved = async () => {
+    setIsLoadingButton(true)
+    try {
+      await cancelReserved(reservedId)
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setIsLoadingButton(false)
+    }
   }
 
+  if (isLoading) return <Loader />
   return (
     <View className='flex-1'>
       <Stack.Screen
@@ -40,14 +41,6 @@ export default function DetailsProductScreen() {
               className='rounded-full bg-white p-2'
             >
               <ArrowLeftIcon />
-            </Pressable>
-          ),
-          headerRight: () => (
-            <Pressable
-              onPress={() => handleAddProductToFavorite(id)}
-              className='rounded-full bg-white p-2'
-            >
-              <HeartIcon />
             </Pressable>
           )
         }}
@@ -68,6 +61,7 @@ export default function DetailsProductScreen() {
           {error}
         </TextWrapper>
       )}
+
       {!message && !error && (
         <>
           <Image
@@ -95,24 +89,12 @@ export default function DetailsProductScreen() {
               {product?.description}
             </TextWrapper>
             <Text style={styles.description}></Text>
-            <View className='flex-row justify-between'>
-              <Button
-                classProps='w-[45%]'
-                isLoading={isLoadingButton}
-                onPress={() =>
-                  handleAddProduct({ quantity: 1, productId: product?.id!, userId: '' })
-                }
-              >
-                Añadir al carrito
-              </Button>
-              <Button
-                classProps='w-[45%]'
-                isLoading={isLoadingButtonReserved}
-                onPress={() => addProductToReserved(product?.id!, product?.user_id!)}
-              >
-                Apartar producto
-              </Button>
-            </View>
+            <Button
+              isLoading={isLoadingButton}
+              onPress={() => handleCancelReserved()}
+            >
+              Cancelar apartado
+            </Button>
           </View>
         </>
       )}

@@ -19,7 +19,11 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.rodrigovm10.puntoarcillafront"
     },
     "web": {
       "bundler": "metro",
@@ -28,7 +32,9 @@
     },
     "plugins": [
       "expo-router",
-      ["expo-font"],
+      [
+        "expo-font"
+      ],
       "expo-secure-store",
       [
         "expo-image-picker",
@@ -39,6 +45,14 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "fec7b929-aae5-484d-a752-7cb6b687ba7b"
+      }
     }
   }
 }

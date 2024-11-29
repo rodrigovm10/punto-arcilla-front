@@ -10,6 +10,7 @@ export default function Cart() {
   const { address } = useAddress()
 
   const { cart, isLoadingCart, handleDeleteProduct, handleUpdateProductQuantity } = useCart()
+
   const handleQuantityChange = async (id: string, action: 'increase' | 'decrease') => {
     cart.forEach(async item => {
       if (item.id === id) {
@@ -118,37 +119,6 @@ export default function Cart() {
                         </View>
                       </View>
                     </View>
-
-                    {/* <View className='flex-row self-end justify-center mr-2'>
-                      <TouchableOpacity
-                        onPress={() => handleQuantityChange(item.id, 'decrease')}
-                        className='bg-gray-200 rounded-full w-[30px] h-[30px]'
-                      >
-                        <TextWrapper
-                          fontFamily='GraphikMedium'
-                          classProps='text-xl text-center'
-                        >
-                          -
-                        </TextWrapper>
-                      </TouchableOpacity>
-                      <TextWrapper
-                        fontFamily='GraphikRegular'
-                        classProps='text-sm mx-4 self-center'
-                      >
-                        {item.quantity}
-                      </TextWrapper>
-                      <TouchableOpacity
-                        onPress={() => handleQuantityChange(item.id, 'decrease')}
-                        className='bg-gray-200 rounded-full w-[30px] h-[30px]'
-                      >
-                        <TextWrapper
-                          fontFamily='GraphikRegular'
-                          classProps='text-xl text-center '
-                        >
-                          +
-                        </TextWrapper>
-                      </TouchableOpacity>
-                    </View> */}
                   </View>
 
                   <Separator classProps='absolute w-[75%] right-1 -bottom-3 ' />

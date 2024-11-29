@@ -1,4 +1,5 @@
 import { ProductList } from '@/components/dashboard/ProductList'
+import ReservedList from '@/components/dashboard/ReservedList'
 import { Tabs } from '@/components/dashboard/Tabs'
 import { useState } from 'react'
 import { ScrollView, Text, View } from 'react-native'
@@ -8,8 +9,7 @@ export default function ProductsScreen() {
 
   const tabs = [
     { title: 'Productos publicados', content: <ProductList /> },
-    { title: 'Órdenes', content: <Text>Órdenes hechas</Text> },
-    { title: 'Apartados', content: <Text>Apartados disponibles</Text> }
+    { title: 'Apartados', content: <ReservedList /> }
   ]
 
   const handleTabs = (index: number) => {

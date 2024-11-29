@@ -31,7 +31,6 @@ export function useGetProductById({ id }: { id: string }) {
         }
       } finally {
         setIsLoading(false)
-        console.log()
       }
     })()
   }, [])

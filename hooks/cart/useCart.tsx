@@ -48,11 +48,6 @@ export function useCart() {
         data: quantity
       })
 
-      console.log(quantity)
-      // console.log(itemDeleted.data.item)
-      // const cartUpdated = cart.filter(item => item.id !== itemDeleted.data.item.id)
-      // toastAlert('Producto eliminado del carrito.')
-      // setCart(cartUpdated)
       await fetchCart()
     } catch (error: any) {
       if (error.response.status === 400) {
@@ -72,7 +67,6 @@ export function useCart() {
     const userObject: UserLogged = JSON.parse(user)
     try {
       const itemDeleted = await deleteProduct(userObject.id, productId, session)
-      console.log(itemDeleted.data.item)
       const cartUpdated = cart.filter(item => item.id !== itemDeleted.data.item.id)
       toastAlert('Producto eliminado del carrito.')
       // setCart(cartUpdated)
@@ -96,7 +90,6 @@ export function useCart() {
 
     try {
       const data = await getCart(userObject.id, session)
-      // console.log(data.data.cart.cart_items[0].product_id)
       const cartProducts: ProductCartItem[] = await Promise.all(
         data.data.cart.cart_items.map(async (item: CartItem) => {
           const productData = await getProductById(item.product_id, session)

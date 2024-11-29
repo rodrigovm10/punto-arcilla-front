@@ -18,7 +18,6 @@ export function useAddress() {
     try {
       const address = await getAddress(userObject.id, session)
       setAddress(address.data)
-      console.log(address.data)
     } catch (error) {
     } finally {
       setIsLoading(false)

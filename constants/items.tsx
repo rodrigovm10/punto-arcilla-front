@@ -15,7 +15,7 @@ export interface AccountItem {
   classProps?: string
 }
 
-export const ACCOUNT_ITEMS: AccountItem[] = [
+export const ACCOUNT_ITEMS_SELLER: AccountItem[] = [
   {
     id: 1,
     name: 'Perfil',
@@ -48,28 +48,43 @@ export const ACCOUNT_ITEMS: AccountItem[] = [
       />
     ),
     href: '/(products)'
+  }
+]
+
+export const ACCOUNT_ITEMS: AccountItem[] = [
+  {
+    id: 1,
+    name: 'Perfil',
+    icon: (
+      <UserIcon
+        className='opacity-80 self-center'
+        size={18}
+      />
+    ),
+    href: '/(user-info)/update-profile'
   },
   {
+    id: 2,
+    name: 'Direcciones',
+    icon: (
+      <LocationPinIcon
+        className='opacity-80 self-center'
+        size={18}
+      />
+    ),
+    href: '/(address)'
+  },
+
+  {
     id: 4,
-    name: 'Compras',
+    name: 'Apartados',
     icon: (
       <ShoppingBagIcon
         className='opacity-80 self-center'
         size={18}
       />
     ),
-    href: '/'
-  },
-  {
-    id: 5,
-    name: 'Notificaciones',
-    icon: (
-      <NotificationIcon
-        className='opacity-80 self-center'
-        size={18}
-      />
-    ),
-    href: '/'
+    href: '/(account)/reserved'
   }
 ]
 

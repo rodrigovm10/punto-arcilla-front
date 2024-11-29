@@ -33,6 +33,6 @@ export interface GetUser {
 }
 
 export enum Role {
-  BUYER,
-  SELLER
+  BUYER = 'BUYER',
+  SELLER = 'SELLER'
 }

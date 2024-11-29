@@ -19,7 +19,6 @@ export default function UpdateProfileScreen() {
     profile,
     isLoadingProfile
   } = useProfileUpdate()
-  console.log(isLoading)
 
   if (isLoadingProfile) {
     return <Loader />
